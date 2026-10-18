@@ -49,7 +49,15 @@
         <div class="bg-white border border-slate-200 rounded-xl p-5 dark:bg-slate-800 dark:border-slate-700 transition-colors">
             <div class="flex items-center justify-between mb-2">
                 <span class="font-bold text-slate-900 dark:text-slate-100">{{ msg.name|default:_("匿名") }}</span>
-                <span class="text-xs text-slate-500 dark:text-slate-400">{{ msg.created_at|date:"Y-m-d H:i" }}</span>
+                <span class="flex items-center gap-2">
+                    <span class="text-xs text-slate-500 dark:text-slate-400">{{ msg.created_at|date:"Y-m-d H:i" }}</span>
+                    {% if msg.deletable %}
+                    <form method="post" action="{% url 'guestbook:delete' pk=msg.pk %}" onsubmit="return confirm('{% trans '确定删除这条留言吗？' %}')">
+                        {% csrf_token %}
+                        <button class="text-xs text-red-500 hover:text-red-600 transition">{% trans "删除" %}</button>
+                    </form>
+                    {% endif %}
+                </span>
             </div>
             <p class="text-slate-700 dark:text-slate-300 whitespace-pre-wrap">{{ msg.content }}</p>
         </div>

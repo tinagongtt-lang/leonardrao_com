@@ -6,4 +6,5 @@ app_name = 'guestbook'
 
 urlpatterns = [
     path('', views.guestbook, name='guestbook'),
+    path('<int:pk>/delete/', views.delete_message, name='delete'),
 ]
