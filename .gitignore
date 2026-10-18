@@ -9,7 +9,6 @@ venv/
 .venv/
 staticfiles/
 media/
-pgdata/
 *.sqlite3
 *.log
 .DS_Store
