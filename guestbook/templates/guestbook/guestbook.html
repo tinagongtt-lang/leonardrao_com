@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}{% load i18n %}
+
+{% block title %}{% trans "留言板" %} - Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-5xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200">{% trans "留言板" %}</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="max-w-3xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-8 text-center">{% trans "留言板" %}</h1>
+
+    <form method="post" class="bg-white border border-slate-200 rounded-2xl p-6 mb-10 dark:bg-slate-800 dark:border-slate-700 transition-colors">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{% trans "昵称" %}</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+                <p class="text-rose-500 text-sm mt-1">{{ form.name.errors.0 }}</p>
+            {% endif %}
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{% trans "留言内容" %}</label>
+            {{ form.content }}
+            {% if form.content.errors %}
+                <p class="text-rose-500 text-sm mt-1">{{ form.content.errors.0 }}</p>
+            {% endif %}
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{% trans "验证码" %}</label>
+            <div class="captcha-widget">
+                {{ form.captcha }}
+            </div>
+            {% if form.captcha.errors %}
+                <p class="text-rose-500 text-sm mt-1">{{ form.captcha.errors.0 }}</p>
+            {% endif %}
+        </div>
+        <button type="submit" class="w-full py-3 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-semibold transition">{% trans "发表留言" %}</button>
+    </form>
+
+    <div class="space-y-4">
+        {% for msg in messages %}
+        <div class="bg-white border border-slate-200 rounded-xl p-5 dark:bg-slate-800 dark:border-slate-700 transition-colors">
+            <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-slate-900 dark:text-slate-100">{{ msg.name|default:_("匿名") }}</span>
+                <span class="text-xs text-slate-500 dark:text-slate-400">{{ msg.created_at|date:"Y-m-d H:i" }}</span>
+            </div>
+            <p class="text-slate-700 dark:text-slate-300 whitespace-pre-wrap">{{ msg.content }}</p>
+        </div>
+        {% empty %}
+        <p class="text-center text-slate-500 dark:text-slate-400">{% trans "还没有留言，来做第一个吧！" %}</p>
+        {% endfor %}
+    </div>
+    {% include 'core/pagination.html' with page_obj=messages %}
+</section>
+{% endblock %}

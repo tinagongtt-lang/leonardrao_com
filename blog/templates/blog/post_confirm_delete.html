@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}{% load i18n %}
+
+{% block title %}{% trans "删除博客" %} | Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-3xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <a href="{% url 'blog:blog_home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "博客" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <a href="{% url 'blog:author_detail' username=post.author.username %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{{ post.author.username }}{% trans "的博客" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <a href="{{ post.get_absolute_url }}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{{ post.title }}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200">{% trans "删除" %}</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-4">{% trans "确认删除" %}</h1>
+    <p class="text-slate-700 dark:text-slate-300 mb-6">
+        {% trans "你确定要删除博客" %} <strong>{{ post.title }}</strong> {% trans "吗？" %}
+    </p>
+    <form method="post" class="flex gap-3">
+        {% csrf_token %}
+        <button type="submit" class="px-5 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition">{% trans "删除" %}</button>
+        <a href="{{ post.get_absolute_url }}" class="px-5 py-2 rounded-lg bg-slate-200 text-slate-800 hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-100 dark:hover:bg-slate-600 transition">{% trans "取消" %}</a>
+    </form>
+</div>
+{% endblock %}

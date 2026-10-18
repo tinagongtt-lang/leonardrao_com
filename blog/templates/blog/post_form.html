@@ -1,0 +1,52 @@
+{% extends 'core/base.html' %}{% load i18n %}
+
+{% block title %}{{ title }} | Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-3xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <a href="{% url 'blog:blog_home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "博客" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200">{{ title }}</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-8">
+    <h1 class="text-2xl sm:text-3xl font-bold mb-6">{{ title }}</h1>
+    <form method="post" class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm transition-colors space-y-5">
+        {% csrf_token %}
+        <div>
+            <label for="{{ form.title.id_for_label }}" class="block text-sm font-medium mb-2">{{ form.title.label }}</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+                <p class="text-red-600 dark:text-red-400 text-sm mt-1">{{ form.title.errors.0 }}</p>
+            {% endif %}
+        </div>
+        <div>
+            <label for="{{ form.tags.id_for_label }}" class="block text-sm font-medium mb-2">{{ form.tags.label }}</label>
+            {{ form.tags }}
+            {% if form.tags.errors %}
+                <p class="text-red-600 dark:text-red-400 text-sm mt-1">{{ form.tags.errors.0 }}</p>
+            {% endif %}
+        </div>
+        <div>
+            {{ form.content }}
+            {% with value=form.content.value %}{% include 'blog/rich_editor.html' %}{% endwith %}
+            {% if form.content.errors %}
+                <p class="text-red-600 dark:text-red-400 text-sm mt-1">{{ form.content.errors.0 }}</p>
+            {% endif %}
+        </div>
+        {% if form.non_field_errors %}
+            <p class="text-red-600 dark:text-red-400 text-sm">{{ form.non_field_errors.0 }}</p>
+        {% endif %}
+        <div class="flex gap-3 pt-2">
+            <button type="submit" class="px-5 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700 transition">{% trans "保存" %}</button>
+            <a href="{% url 'blog:blog_home' %}" class="px-5 py-2 rounded-lg bg-slate-200 text-slate-800 hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-100 dark:hover:bg-slate-600 transition">{% trans "取消" %}</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}{% load i18n %}
+
+{% block title %}Leonard Rao - {% trans "首页" %}{% endblock %}
+
+{% block content %}
+<section class="max-w-5xl mx-auto px-4 py-16 text-center">
+    <h1 class="text-4xl sm:text-5xl font-extrabold mb-4 bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent">
+        Leonard Rao
+    </h1>
+    <p class="text-lg text-slate-600 dark:text-slate-400 mb-8">{% trans "个人网站 · 益智游戏 · 实用工具" %}</p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+        <a href="{% url 'games:index' %}" class="group block rounded-2xl bg-white border border-slate-200 p-8 hover:border-sky-500 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 transition">
+            <div class="text-4xl mb-4">🎮</div>
+            <h2 class="text-2xl font-bold mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">{% trans "益智游戏" %}</h2>
+            <p class="text-slate-600 dark:text-slate-400">{% trans "2048、3D 迷宫" %}</p>
+        </a>
+        <a href="{% url 'tools:index' %}" class="group block rounded-2xl bg-white border border-slate-200 p-8 hover:border-sky-500 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 transition">
+            <div class="text-4xl mb-4">🛠️</div>
+            <h2 class="text-2xl font-bold mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">{% trans "实用工具" %}</h2>
+            <p class="text-slate-600 dark:text-slate-400">{% trans "计时器、秒表、进制转换" %}</p>
+        </a>
+    </div>
+</section>
+{% endblock %}

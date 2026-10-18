@@ -1,0 +1,334 @@
+{% extends 'core/base.html' %}{% load i18n chat_extras %}
+
+{% block title %}{{ room.name }} - Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-5xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <a href="{% url 'chat:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "聊天室" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200">{{ room.name }}</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="max-w-3xl mx-auto px-4 py-8" id="chat-app" data-code="{{ room.code }}" data-uid="{{ request.user.id }}" data-username="{{ request.user.username }}">
+    <div class="flex items-center justify-center gap-3 mb-4">
+        <h1 class="text-2xl font-bold">{{ room.name }}</h1>
+        <form method="post" action="{% url 'chat:room_leave' code=room.code %}" onsubmit="return confirm('{% trans '确定退出该群吗？' %}')">
+            {% csrf_token %}
+            <button class="px-3 py-1 rounded-lg bg-slate-400 text-white text-sm hover:bg-slate-500 transition">{% trans "退群" %}</button>
+        </form>
+        {% if is_owner %}
+        <form method="post" action="{% url 'chat:room_disband' code=room.code %}" onsubmit="return confirm('{% trans '确定解散该群吗？此操作不可恢复' %}')">
+            {% csrf_token %}
+            <button class="px-3 py-1 rounded-lg bg-red-600 text-white text-sm hover:bg-red-700 transition">{% trans "解散群" %}</button>
+        </form>
+        {% endif %}
+    </div>
+
+    <div class="rounded-2xl bg-white border border-slate-200 dark:bg-slate-800 dark:border-slate-700 p-4 mb-4">
+        <div class="flex flex-wrap gap-2 mb-3">
+            {% for m in members %}
+            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-700 text-sm">
+                {{ m.user.username }}
+                {% if m.is_owner %}<em class="not-italic text-xs text-amber-600">{% trans "群主" %}</em>
+                {% elif m.is_admin %}<em class="not-italic text-xs text-sky-600">{% trans "管理员" %}</em>{% endif %}
+                {% if m.can_toggle_admin %}
+                {% if m.is_admin %}
+                <form method="post" action="{% url 'chat:room_admin' code=room.code action='remove' %}" class="inline">{% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ m.user.id }}">
+                    <button class="text-xs text-slate-500 hover:underline">{% trans "取消管理员" %}</button>
+                </form>
+                {% else %}
+                <form method="post" action="{% url 'chat:room_admin' code=room.code action='add' %}" class="inline">{% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ m.user.id }}">
+                    <button class="text-xs text-emerald-600 hover:underline">{% trans "设为管理员" %}</button>
+                </form>
+                {% endif %}
+                {% endif %}
+                {% if m.can_kick %}
+                <form method="post" action="{% url 'chat:room_kick' code=room.code %}" class="inline" onsubmit="return confirm('{% trans '确定踢出该成员吗？' %}')">{% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ m.user.id }}">
+                    <button class="text-xs text-red-600 hover:underline">{% trans "踢出" %}</button>
+                </form>
+                {% endif %}
+            </span>
+            {% endfor %}
+        </div>
+        {% if awaiting %}
+        <div class="rounded-xl bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700 p-3 mb-3 space-y-2">
+            {% for inv in awaiting %}
+            <div class="flex items-center justify-between text-sm">
+                <span><strong>{{ inv.from_user.username }}</strong> {% trans "想拉" %} <strong>{{ inv.to_user.username }}</strong> {% trans "进群" %}</span>
+                <span class="flex gap-2">
+                    <form method="post" action="{% url 'chat:invite_approve' pk=inv.pk action='approve' %}">{% csrf_token %}<button class="px-2 py-0.5 rounded bg-emerald-600 text-white text-xs">{% trans "同意" %}</button></form>
+                    <form method="post" action="{% url 'chat:invite_approve' pk=inv.pk action='reject' %}">{% csrf_token %}<button class="px-2 py-0.5 rounded bg-slate-400 text-white text-xs">{% trans "拒绝" %}</button></form>
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <form method="post" action="{% url 'chat:room_add_member' code=room.code %}" class="flex gap-2">
+                {% csrf_token %}
+                <input name="code" maxlength="10" placeholder="{% trans '账号码直接拉人' %}" required
+                       class="flex-1 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-sm">
+                <button type="submit" class="px-3 py-2 rounded-lg bg-sky-600 text-white text-sm hover:bg-sky-700 transition">{% trans "拉入" %}</button>
+            </form>
+            <form method="post" action="{% url 'chat:room_add_friend' code=room.code %}" class="flex gap-2">
+                {% csrf_token %}
+                <select name="user_id" class="flex-1 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-sm">
+                    {% for f in friends %}
+                    <option value="{{ f.user.id }}">{{ f.user.username }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="px-3 py-2 rounded-lg bg-emerald-600 text-white text-sm hover:bg-emerald-700 transition">{% trans "拉好友" %}</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="chat-messages" class="rounded-2xl bg-slate-50 border border-slate-200 dark:bg-slate-900 dark:border-slate-700 p-4 h-96 overflow-y-auto mb-4 space-y-4">
+        {% for msg in messages %}
+        {% if msg.sender_id == request.user.id %}
+        <div class="flex items-start justify-end gap-2">
+            <div class="max-w-[75%]">
+                <div class="bg-sky-600 text-white rounded-2xl rounded-br-md {% if msg.msg_type == 'image' %}p-1{% else %}px-4 py-2{% endif %} shadow-sm">
+                    {% if msg.msg_type == 'image' %}
+                    <a href="{{ msg.content }}" target="_blank"><img src="{{ msg.content }}" class="rounded-xl max-h-64 cursor-zoom-in" alt="{% trans '图片' %}" loading="lazy"></a>
+                    {% else %}
+                    <p class="text-sm break-words whitespace-pre-wrap">{{ msg.content|linkify:'text-sky-200 underline hover:text-white break-all' }}</p>
+                    {% endif %}
+                </div>
+                <p class="text-[10px] text-slate-400 text-right mt-0.5">{{ msg.created_at|date:'H:i' }}</p>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-sky-500 text-white flex items-center justify-center text-sm font-bold flex-shrink-0 select-none">{{ msg.sender.username|slice:':1'|upper }}</div>
+        </div>
+        {% else %}
+        <div class="flex items-start gap-2">
+            <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-sm font-bold flex-shrink-0 select-none">{{ msg.sender.username|slice:':1'|upper }}</div>
+            <div class="max-w-[75%]">
+                <p class="text-xs text-slate-500 dark:text-slate-400 mb-0.5 ml-1">{{ msg.sender.username }}</p>
+                <div class="bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tl-md {% if msg.msg_type == 'image' %}p-1{% else %}px-4 py-2{% endif %} shadow-sm border border-slate-100 dark:border-slate-600">
+                    {% if msg.msg_type == 'image' %}
+                    <a href="{{ msg.content }}" target="_blank"><img src="{{ msg.content }}" class="rounded-xl max-h-64 cursor-zoom-in" alt="{% trans '图片' %}" loading="lazy"></a>
+                    {% else %}
+                    <p class="text-sm break-words whitespace-pre-wrap">{{ msg.content|linkify }}</p>
+                    {% endif %}
+                </div>
+                <p class="text-[10px] text-slate-400 mt-0.5 ml-1">{{ msg.created_at|date:'H:i' }}</p>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <form id="chat-form" class="flex gap-2">
+        {% csrf_token %}
+        <input type="file" id="chat-image" accept="image/*" class="hidden">
+        <button type="button" id="chat-image-btn" title="{% trans '发送图片（最大20M）' %}"
+                class="px-3 py-2.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600 active:scale-95 transition shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+        </button>
+        <input id="chat-input" maxlength="1000" autocomplete="off" placeholder="{% trans '输入消息…' %}"
+               class="flex-1 px-4 py-2.5 rounded-full border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent">
+        <button type="submit" class="px-5 py-2.5 rounded-full bg-sky-600 text-white font-medium hover:bg-sky-700 active:scale-95 transition shadow-sm">{% trans "发送" %}</button>
+    </form>
+</section>
+{% endblock %}
+
+{% block extra_head %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var app = document.getElementById('chat-app');
+    var code = app.dataset.code;
+    var list = document.getElementById('chat-messages');
+    var form = document.getElementById('chat-form');
+    var input = document.getElementById('chat-input');
+    var ws;
+
+    function avatar(name, cls) {
+        var a = document.createElement('div');
+        a.className = 'w-8 h-8 rounded-full text-white flex items-center justify-center text-sm font-bold flex-shrink-0 select-none ' + cls;
+        a.textContent = (name || '?').charAt(0).toUpperCase();
+        return a;
+    }
+
+    function appendMessage(sender, content, time, msgType) {
+        var own = sender === app.dataset.username;
+        var row = document.createElement('div');
+        row.className = own ? 'flex items-start justify-end gap-2' : 'flex items-start gap-2';
+
+        var side = document.createElement('div');
+        side.className = 'max-w-[75%]';
+
+        if (!own) {
+            var name = document.createElement('p');
+            name.className = 'text-xs text-slate-500 dark:text-slate-400 mb-0.5 ml-1';
+            name.textContent = sender;
+            side.appendChild(name);
+        }
+
+        var bubble = document.createElement('div');
+        var pad = msgType === 'image' ? 'p-1' : 'px-4 py-2';
+        bubble.className = own
+            ? 'bg-sky-600 text-white rounded-2xl rounded-br-md ' + pad + ' shadow-sm'
+            : 'bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tl-md ' + pad + ' shadow-sm border border-slate-100 dark:border-slate-600';
+        if (msgType === 'image') {
+            var link = document.createElement('a');
+            link.href = content; link.target = '_blank';
+            var img = document.createElement('img');
+            img.src = content;
+            img.className = 'rounded-xl max-h-64 cursor-zoom-in';
+            img.loading = 'lazy';
+            link.appendChild(img);
+            bubble.appendChild(link);
+        } else {
+            var p = document.createElement('p');
+            p.className = 'text-sm break-words whitespace-pre-wrap';
+            var linkCls = own
+                ? 'text-sky-200 underline hover:text-white break-all'
+                : 'text-sky-600 dark:text-sky-400 underline hover:opacity-80 break-all';
+            var tld = '(?:com|net|org|io|dev|app|ai|me|info|biz|gov|edu|cn|jp|kr|us|uk|xyz|site|cc|tv|top|vip|shop|wiki|blog|club|online|tech|live|ink|red|blue|mobi|asia)';
+            var pathChars = "[A-Za-z0-9\\-._~:/?#@!$&'()*+,;=%]";
+            var urlRe = new RegExp('(https?:\\/\\/[^\\s<>"\'\\u4e00-\\u9fff\\uff00-\\uffef\\u3000-\\u303f]+|\\d{1,3}(?:\\.\\d{1,3}){3}(?::\\d{1,5})?(?:\\/' + pathChars + '*)?|[a-zA-Z0-9][-a-zA-Z0-9]*(?:\\.[a-zA-Z0-9][-a-zA-Z0-9]*)*\\.' + tld + '\\b(?:\\/' + pathChars + '*)?)', 'gi');
+            var parts = content.split(urlRe);
+            var urlTest = new RegExp('^(https?:\\/\\/|\\d{1,3}(?:\\.\\d{1,3}){3}|[-a-zA-Z0-9]*[a-zA-Z0-9](?:\\.[-a-zA-Z0-9]*[a-zA-Z0-9])*\\.' + tld + ')\\b', 'i');
+            for (var i = 0; i < parts.length; i++) {
+                var part = parts[i];
+                if (!part) continue;
+                if (urlTest.test(part)) {
+                    var a = document.createElement('a');
+                    if (/^https?:\/\//.test(part)) {
+                        a.href = part;
+                    } else if (/^\d{1,3}(?:\.\d{1,3}){3}/.test(part)) {
+                        a.href = 'http://' + part;
+                    } else {
+                        a.href = 'https://' + part;
+                    }
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    a.className = linkCls;
+                    a.textContent = part;
+                    p.appendChild(a);
+                } else {
+                    p.appendChild(document.createTextNode(part));
+                }
+            }
+            bubble.appendChild(p);
+            var firstLink = p.querySelector('a');
+            if (firstLink) fetchPreview(firstLink.href, side);
+        }
+        side.appendChild(bubble);
+
+        var t = document.createElement('p');
+        t.className = 'text-[10px] text-slate-400 mt-0.5 ' + (own ? 'text-right' : 'ml-1');
+        t.textContent = time;
+        side.appendChild(t);
+
+        if (own) {
+            row.appendChild(side);
+            row.appendChild(avatar(sender, 'bg-sky-500'));
+        } else {
+            row.appendChild(avatar(sender, 'bg-emerald-500'));
+            row.appendChild(side);
+        }
+        list.appendChild(row);
+        list.scrollTop = list.scrollHeight;
+    }
+
+    function fetchPreview(url, side) {
+        if (!/^https?:/.test(url)) return;
+        fetch('/chat/link-preview/?url=' + encodeURIComponent(url))
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (!d.title) return;
+                var card = document.createElement('a');
+                card.href = url; card.target = '_blank'; card.rel = 'noopener noreferrer';
+                card.className = 'block mt-1 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 overflow-hidden hover:bg-slate-50 dark:hover:bg-slate-700 transition shadow-sm';
+                var inner = document.createElement('div');
+                inner.className = 'flex gap-3 p-3';
+                var text = document.createElement('div');
+                text.className = 'min-w-0 flex-1';
+                var t = document.createElement('p');
+                t.className = 'text-sm font-semibold text-slate-800 dark:text-slate-100 truncate';
+                t.textContent = d.title;
+                text.appendChild(t);
+                if (d.description) {
+                    var dd = document.createElement('p');
+                    dd.className = 'text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2';
+                    dd.textContent = d.description;
+                    text.appendChild(dd);
+                }
+                var s = document.createElement('p');
+                s.className = 'text-[10px] text-slate-400 mt-0.5';
+                s.textContent = d.site || '';
+                text.appendChild(s);
+                inner.appendChild(text);
+                if (d.image && /^https?:/.test(d.image)) {
+                    var img = document.createElement('img');
+                    img.src = d.image;
+                    img.className = 'w-16 h-16 rounded-lg object-cover flex-shrink-0 bg-slate-100';
+                    img.loading = 'lazy';
+                    img.onerror = function () { img.remove(); };
+                    inner.appendChild(img);
+                }
+                card.appendChild(inner);
+                side.appendChild(card);
+            })
+            .catch(function () {});
+    }
+
+    function connect() {
+        var proto = location.protocol === 'https:' ? 'wss://' : 'ws://';
+        ws = new WebSocket(proto + location.host + '/ws/chat/' + code + '/');
+        ws.onmessage = function (e) {
+            var msg = JSON.parse(e.data);
+            if (msg.type === 'message') appendMessage(msg.sender, msg.content, msg.time, msg.msg_type);
+            else if (msg.type === 'room_deleted' || (msg.type === 'member_kicked' && String(msg.user_id) === app.dataset.uid)) {
+                location.href = '/chat/';
+            }
+        };
+        ws.onclose = function () { setTimeout(connect, 2000); };
+    }
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var v = input.value.trim();
+        if (!v) return;
+        ws.send(JSON.stringify({ type: 'message', content: v }));
+        input.value = '';
+    });
+
+    var imgBtn = document.getElementById('chat-image-btn');
+    var imgInput = document.getElementById('chat-image');
+    var csrf = form.querySelector('input[name="csrfmiddlewaretoken"]');
+    imgBtn.addEventListener('click', function () { imgInput.click(); });
+    imgInput.addEventListener('change', function () {
+        var f = imgInput.files[0];
+        if (!f) return;
+        if (f.size > 20 * 1024 * 1024) { alert('{% trans "图片不能超过 20M" %}'); imgInput.value = ''; return; }
+        var fd = new FormData();
+        fd.append('image', f);
+        imgBtn.disabled = true;
+        fetch('/chat/room/' + code + '/upload/', {
+            method: 'POST',
+            headers: { 'X-CSRFToken': csrf ? csrf.value : '' },
+            body: fd,
+        }).then(function (r) { return r.json(); }).then(function (data) {
+            if (data.url) ws.send(JSON.stringify({ type: 'image', url: data.url }));
+            else alert(data.error || '{% trans "上传失败" %}');
+        }).catch(function () { alert('{% trans "上传失败" %}'); })
+          .finally(function () { imgBtn.disabled = false; imgInput.value = ''; });
+    });
+
+    list.scrollTop = list.scrollHeight;
+    connect();
+});
+</script>
+{% endblock %}

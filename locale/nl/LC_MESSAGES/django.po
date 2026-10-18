@@ -1,0 +1,475 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-11 17:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: blog/forms.py:19
+msgid "请输入标题"
+msgstr "Gelieve de titel in te voeren"
+
+#: blog/forms.py:24
+msgid "写下你的博客内容..."
+msgstr "Het is een van de belangrijkste dingen die je kunt doen."
+
+#: blog/forms.py:37
+msgid "编辑关于我的内容..."
+msgstr "Het is de laatste keer dat ik het heb gedaan."
+
+#: blog/forms.py:49
+msgid "用户名"
+msgstr "Gebruikersnaam"
+
+#: blog/forms.py:53
+msgid "密码"
+msgstr "Passwoorden"
+
+#: blog/forms.py:57
+msgid "确认密码"
+msgstr "Passwoorden bevestigen"
+
+#: blog/models.py:10
+msgid "作者"
+msgstr "Schrijver"
+
+#: blog/models.py:11
+msgid "标题"
+msgstr "Titels"
+
+#: blog/models.py:12
+msgid "内容"
+msgstr "Inhoud"
+
+#: blog/models.py:13
+msgid "创建时间"
+msgstr "Het tijdstip van het creëren"
+
+#: blog/models.py:14 blog/models.py:30
+msgid "更新时间"
+msgstr "Terugzetting"
+
+#: blog/models.py:18 blog/models.py:19
+msgid "博客文章"
+msgstr "Blogartikelen"
+
+#: blog/models.py:29 blog/models.py:33 blog/models.py:34 blog/models.py:37
+#: blog/templates/blog/about_me.html:3 blog/templates/blog/about_me.html:8
+#: core/templates/core/base.html:50 core/templates/core/base.html:91
+msgid "关于我"
+msgstr "Over mij"
+
+#: blog/templates/blog/about_me.html:10
+#: blog/templates/blog/post_detail.html:21
+msgid "编辑"
+msgstr "Geïnspireerd"
+
+#: blog/templates/blog/about_me_edit.html:3
+#: blog/templates/blog/about_me_edit.html:7
+msgid "编辑关于我"
+msgstr "Editorial over mij"
+
+#: blog/templates/blog/about_me_edit.html:21
+#: blog/templates/blog/post_form.html:23
+msgid "保存"
+msgstr "Behoud"
+
+#: blog/templates/blog/about_me_edit.html:22
+#: blog/templates/blog/post_confirm_delete.html:14
+#: blog/templates/blog/post_form.html:24
+msgid "取消"
+msgstr "Afschaffing"
+
+#: blog/templates/blog/author_detail.html:3
+#: blog/templates/blog/author_detail.html:8
+msgid "的博客"
+msgstr "Bloggen"
+
+#: blog/templates/blog/author_detail.html:10
+msgid "写新博客"
+msgstr "Nieuwe blogs schrijven"
+
+#: blog/templates/blog/author_detail.html:24
+msgid "这个用户还没有发布博客。"
+msgstr "Deze gebruiker heeft nog geen blog geplaatst."
+
+#: blog/templates/blog/blog_home.html:3 blog/templates/blog/blog_home.html:8
+#: core/templates/core/base.html:49 core/templates/core/base.html:90
+msgid "博客"
+msgstr "Bloggen"
+
+#: blog/templates/blog/blog_home.html:11 blog/views.py:47
+msgid "写博客"
+msgstr "Bloggen"
+
+#: blog/templates/blog/blog_home.html:13 blog/templates/blog/register.html:3
+#: blog/templates/blog/register.html:7 blog/templates/blog/register.html:25
+#: blog/templates/registration/login.html:26 core/templates/core/base.html:79
+#: core/templates/core/base.html:120
+msgid "注册"
+msgstr "Registratie"
+
+#: blog/templates/blog/blog_home.html:14 blog/templates/blog/register.html:28
+#: blog/templates/registration/login.html:3
+#: blog/templates/registration/login.html:7
+#: blog/templates/registration/login.html:23 core/templates/core/base.html:78
+#: core/templates/core/base.html:119
+msgid "登录"
+msgstr "Inloggen"
+
+#: blog/templates/blog/blog_home.html:21
+msgid "最新博客"
+msgstr "De laatste blog"
+
+#: blog/templates/blog/blog_home.html:35
+msgid "还没有博客。"
+msgstr "Er is nog geen blog."
+
+#: blog/templates/blog/blog_home.html:40
+msgid "博主"
+msgstr "Bloggers"
+
+#: blog/templates/blog/blog_home.html:47
+msgid "篇"
+msgstr "Het gaat om:"
+
+#: blog/templates/blog/blog_home.html:53
+msgid "还没有用户发布博客。"
+msgstr "Er zijn nog geen bloggers."
+
+#: blog/templates/blog/post_confirm_delete.html:3
+msgid "删除博客"
+msgstr "Blogs verwijderen"
+
+#: blog/templates/blog/post_confirm_delete.html:7
+msgid "确认删除"
+msgstr "Bevestig verwijdering"
+
+#: blog/templates/blog/post_confirm_delete.html:9
+msgid "你确定要删除博客"
+msgstr "Ben je zeker dat je de blog wilt verwijderen?"
+
+#: blog/templates/blog/post_confirm_delete.html:9
+msgid "吗？"
+msgstr "Is dat zo?"
+
+#: blog/templates/blog/post_confirm_delete.html:13
+#: blog/templates/blog/post_detail.html:22
+msgid "删除"
+msgstr "Verwijder"
+
+#: blog/templates/blog/post_detail.html:13
+msgid "更新于"
+msgstr "Geactualiseerd op"
+
+#: blog/templates/blog/register.html:28
+msgid "已有账号？"
+msgstr "Heb je een rekening?"
+
+#: blog/templates/registration/login.html:26
+msgid "还没有账号？"
+msgstr "Nog geen rekening?"
+
+#: blog/views.py:43
+msgid "博客已发布"
+msgstr "Blog is gepubliceerd"
+
+#: blog/views.py:55
+msgid "你没有权限编辑这篇博客"
+msgstr "Je hebt geen toestemming om deze blog te bewerken."
+
+#: blog/views.py:60
+msgid "博客已更新"
+msgstr "Blog is bijgewerkt"
+
+#: blog/views.py:64
+msgid "编辑博客"
+msgstr "Blogbewerken"
+
+#: blog/views.py:73
+msgid "你没有权限删除这篇博客"
+msgstr "Je hebt geen toestemming om deze blog te verwijderen."
+
+#: blog/views.py:77
+msgid "博客已删除"
+msgstr "Blog is verwijderd"
+
+#: blog/views.py:90
+msgid "只有超级用户可以编辑关于我"
+msgstr "Alleen supergebruikers kunnen over mij bewerken"
+
+#: blog/views.py:96
+msgid "关于我已更新"
+msgstr "Over mijn update"
+
+#: blog/views.py:105
+msgid "注册成功，请登录"
+msgstr "Succesvol geregistreerd."
+
+#: core/templates/core/base.html:39
+msgid "打开菜单"
+msgstr "Een menu openen"
+
+#: core/templates/core/base.html:45 core/templates/core/base.html:86
+#: core/templates/core/home.html:3
+msgid "首页"
+msgstr "De eerste pagina"
+
+#: core/templates/core/base.html:46 core/templates/core/base.html:87
+msgid "游戏"
+msgstr "Spelen"
+
+#: core/templates/core/base.html:47 core/templates/core/base.html:88
+msgid "工具"
+msgstr "Tools"
+
+#: core/templates/core/base.html:48 core/templates/core/base.html:89
+#: guestbook/templates/guestbook/guestbook.html:3
+#: guestbook/templates/guestbook/guestbook.html:7
+msgid "留言板"
+msgstr "Boards"
+
+#: core/templates/core/base.html:66 core/templates/core/base.html:107
+msgid "自动"
+msgstr "Automatisch"
+
+#: core/templates/core/base.html:67 core/templates/core/base.html:108
+msgid "浅色"
+msgstr "Lichte kleur"
+
+#: core/templates/core/base.html:68 core/templates/core/base.html:109
+msgid "深色"
+msgstr "Diep"
+
+#: core/templates/core/base.html:75 core/templates/core/base.html:116
+msgid "登出"
+msgstr "Opstappen"
+
+#: core/templates/core/base.html:134
+msgid "本站总访问量："
+msgstr "Gehele bezoek aan deze site:"
+
+#: core/templates/core/home.html:10
+msgid "个人网站 · 益智游戏 · 实用工具"
+msgstr "Persoonlijke websites; slimme games; praktische tools"
+
+#: core/templates/core/home.html:15 games/templates/games/index.html:3
+#: games/templates/games/index.html:7
+msgid "益智游戏"
+msgstr "Gewinne spelletjes"
+
+#: core/templates/core/home.html:16
+msgid "2048、3D 迷宫"
+msgstr "2048: 3D Labyrinth"
+
+#: core/templates/core/home.html:20 tools/templates/tools/index.html:3
+#: tools/templates/tools/index.html:7
+msgid "实用工具"
+msgstr "Praktische tools"
+
+#: core/templates/core/home.html:21
+msgid "计时器、秒表、进制转换"
+msgstr "Meters, secundaire tabellen, automatische omschakeling"
+
+#: games/templates/games/2048.html:8
+msgid "使用方向键或滑动屏幕移动方块"
+msgstr "Gebruik de richtingknop of het bewegen van een scherm"
+
+#: games/templates/games/2048.html:11
+msgid "得分："
+msgstr "Scores:"
+
+#: games/templates/games/2048.html:12 games/templates/games/maze3d.html:10
+msgid "重新开始"
+msgstr "Een nieuw begin"
+
+#: games/templates/games/2048.html:23
+msgid "恭喜你达成 2048！"
+msgstr "Gefeliciteerd met 2048!"
+
+#: games/templates/games/2048.html:23
+msgid "游戏结束，点击重新开始"
+msgstr "Het spel is voorbij, klik op opnieuw"
+
+#: games/templates/games/index.html:12
+msgid "经典数字合成游戏"
+msgstr "Classieke digitale synthetische games"
+
+#: games/templates/games/index.html:15 games/templates/games/maze3d.html:3
+#: games/templates/games/maze3d.html:8
+msgid "3D 迷宫"
+msgstr "3D Labyrinth"
+
+#: games/templates/games/index.html:16
+msgid "用 Three.js 实现的第一人称迷宫"
+msgstr "De eerste man die het met Three.js deed, noemde het een labyrinth."
+
+#: games/templates/games/maze3d.html:9
+msgid "W / A / S / D 或方向键移动，找到绿色终点"
+msgstr ""
+"W / A / S / D of de richting knop beweegt om de groene eindpunt te vinden"
+
+#: games/templates/games/maze3d.html:11
+msgid "你走出了迷宫！"
+msgstr "Je bent uit het labyrinth!"
+
+#: guestbook/forms.py:10 guestbook/templates/guestbook/guestbook.html:26
+msgid "验证码"
+msgstr "Verificatiecodes"
+
+#: guestbook/forms.py:11
+msgid "验证码错误"
+msgstr "Verificatie van codefouten"
+
+#: guestbook/forms.py:22
+msgid "你的昵称"
+msgstr "Je bijnaam"
+
+#: guestbook/forms.py:28
+msgid "写下你想说的话..."
+msgstr "Schrijf wat je wilt zeggen."
+
+#: guestbook/templates/guestbook/guestbook.html:12
+msgid "昵称"
+msgstr "Het is een van de grootste"
+
+#: guestbook/templates/guestbook/guestbook.html:19
+msgid "留言内容"
+msgstr "Inhoud van de boodschap"
+
+#: guestbook/templates/guestbook/guestbook.html:53
+msgid "发表留言"
+msgstr "Een boodschap"
+
+#: guestbook/templates/guestbook/guestbook.html:60
+msgid "匿名"
+msgstr "Anoniem"
+
+#: guestbook/templates/guestbook/guestbook.html:66
+msgid "还没有留言，来做第一个吧！"
+msgstr "Nog geen boodschap, kom de eerste!"
+
+#: tools/templates/tools/base_converter.html:3
+#: tools/templates/tools/base_converter.html:7
+#: tools/templates/tools/index.html:19
+msgid "进制转换"
+msgstr "Ingebouwde omzetting"
+
+#: tools/templates/tools/base_converter.html:11
+msgid "输入数值"
+msgstr "Invoer van de waarde"
+
+#: tools/templates/tools/base_converter.html:12
+msgid "输入数字"
+msgstr "Invoercijfers"
+
+#: tools/templates/tools/base_converter.html:16
+msgid "输入进制"
+msgstr "Invoer ingesteld"
+
+#: tools/templates/tools/base_converter.html:18
+#: tools/templates/tools/base_converter.html:28
+msgid "二进制"
+msgstr "Tweeledig systeem"
+
+#: tools/templates/tools/base_converter.html:19
+#: tools/templates/tools/base_converter.html:29
+msgid "八进制"
+msgstr "De 8e versie"
+
+#: tools/templates/tools/base_converter.html:20
+#: tools/templates/tools/base_converter.html:30
+msgid "十进制"
+msgstr "Het is een van de belangrijkste factoren."
+
+#: tools/templates/tools/base_converter.html:21
+#: tools/templates/tools/base_converter.html:31
+msgid "十六进制"
+msgstr "16 Inpak"
+
+#: tools/templates/tools/base_converter.html:26
+msgid "目标进制"
+msgstr "Doeldoelstelling"
+
+#: tools/templates/tools/base_converter.html:35
+msgid "转换"
+msgstr "Veranderingen"
+
+#: tools/templates/tools/base_converter.html:38
+msgid "结果"
+msgstr "Het resultaat"
+
+#: tools/templates/tools/base_converter.html:39
+msgid "输入格式错误"
+msgstr "Invoerfout"
+
+#: tools/templates/tools/index.html:11 tools/templates/tools/timer.html:3
+#: tools/templates/tools/timer.html:7
+msgid "计时器"
+msgstr "Teller"
+
+#: tools/templates/tools/index.html:12
+msgid "设定时间，倒计时提醒"
+msgstr "Het is een tijdsbestek, een tijdsbestek."
+
+#: tools/templates/tools/index.html:15 tools/templates/tools/stopwatch.html:3
+#: tools/templates/tools/stopwatch.html:7
+msgid "秒表"
+msgstr "Het moment van het moment"
+
+#: tools/templates/tools/index.html:16
+msgid "开始、暂停、计圈、重置"
+msgstr "Start, stop, meet, opnieuw plaatsen"
+
+#: tools/templates/tools/index.html:20
+msgid "二 / 八 / 十 / 十六进制互转"
+msgstr "2 / 8 / 10 / 16 Interactie en omzetting"
+
+#: tools/templates/tools/stopwatch.html:12 tools/templates/tools/timer.html:21
+msgid "开始"
+msgstr "Begin"
+
+#: tools/templates/tools/stopwatch.html:13
+msgid "停止"
+msgstr "Hou op."
+
+#: tools/templates/tools/stopwatch.html:14
+msgid "计圈"
+msgstr "De omtrek"
+
+#: tools/templates/tools/stopwatch.html:15 tools/templates/tools/timer.html:23
+msgid "重置"
+msgstr "Herstellen"
+
+#: tools/templates/tools/stopwatch.html:19
+msgid "计圈 #"
+msgstr "De omtrek"
+
+#: tools/templates/tools/timer.html:11
+msgid "分"
+msgstr "Ik heb het."
+
+#: tools/templates/tools/timer.html:13
+msgid "秒"
+msgstr "Een seconde."
+
+#: tools/templates/tools/timer.html:18
+msgid "时间到！"
+msgstr "Het is tijd!"
+
+#: tools/templates/tools/timer.html:22
+msgid "暂停"
+msgstr "Opschorting"

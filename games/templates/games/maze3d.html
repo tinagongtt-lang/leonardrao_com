@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}{% load static %}{% load i18n %}
+
+{% block title %}{% trans "3D 迷宫" %} - Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-5xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <a href="{% url 'games:index' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "益智游戏" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200">{% trans "3D 迷宫" %}</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="max-w-5xl mx-auto px-4 py-8">
+    <div class="text-center mb-4">
+        <h1 class="text-3xl font-bold">{% trans "3D 迷宫" %}</h1>
+        <p class="text-slate-600 dark:text-slate-400 mt-1">{% trans "W / A / S / D 或方向键移动，找到绿色终点" %}</p>
+        <button id="reset" class="mt-3 px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 font-semibold transition">{% trans "重新开始" %}</button>
+        <div id="win" class="hidden mt-2 text-xl font-bold text-emerald-600 dark:text-emerald-400" data-text="{% trans '你走出了迷宫！' %}">🎉 {% trans "你走出了迷宫！" %}</div>
+    </div>
+
+    <div class="flex justify-center">
+        <canvas id="maze" class="rounded-xl shadow-2xl max-w-full h-auto" width="800" height="600"></canvas>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_head %}
+<script type="importmap">
+{
+    "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+    }
+}
+</script>
+<script src="{% static 'games/maze3d.js' %}" type="module" defer></script>
+{% endblock %}

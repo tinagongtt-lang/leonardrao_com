@@ -1,0 +1,307 @@
+{% load static %}{% load i18n %}{% load core_extras %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Leonard Rao{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{% trans 'Leonard Rao 的个人网站，包含博客、游戏、工具和留言板。' %}{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}Leonard Rao{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{% trans 'Leonard Rao 的个人网站，包含博客、游戏、工具和留言板。' %}{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:site_name" content="Leonard Rao">
+    <meta name="twitter:card" content="summary">
+    {% get_available_languages as LANGUAGES %}
+    {% for code, name in LANGUAGES %}
+        <link rel="alternate" hreflang="{{ code }}" href="{{ request.build_absolute_uri|localize_url:code }}">
+    {% endfor %}
+    <link rel="alternate" hreflang="x-default" href="{{ request.build_absolute_uri|localize_url:'' }}">
+    <meta name="theme-color" content="#0ea5e9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Leonard Rao">
+    <link rel="icon" type="image/svg+xml" href="{% static 'favicon.svg' %}">
+    <link rel="apple-touch-icon" href="{% static 'icons/icon-192.png' %}">
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <link rel="stylesheet" href="{% static 'css/output.css' %}?v=12">
+    <style>
+        #page-progress { position: fixed; top: 0; left: 0; height: 3px; background: #0ea5e9; width: 0%; z-index: 100; transition: width .2s ease; }
+        #back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 50; opacity: 0; pointer-events: none; transition: opacity .2s; }
+        #back-to-top.visible { opacity: 1; pointer-events: auto; }
+    </style>
+    <script>
+        (function () {
+            function isAutoDark() {
+                const hour = new Date().getHours();
+                return hour >= 18 || hour < 6;
+            }
+            const theme = localStorage.getItem('theme') || 'auto';
+            const isDark = theme === 'dark' || (theme === 'auto' && isAutoDark());
+            document.documentElement.classList.toggle('dark', isDark);
+        })();
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register("{% url 'service_worker' %}")
+                .catch(() => {});
+        }
+    </script>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors">
+    <div id="page-progress"></div>
+    <nav id="main-nav" class="sticky top-0 z-50 bg-white border-b border-slate-200 dark:bg-slate-800 dark:border-slate-700 transition-colors transition-transform duration-300">
+        <div class="max-w-5xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="{% url 'core:home' %}" class="text-xl font-bold tracking-tight hover:text-sky-600 dark:hover:text-sky-400 transition">Leonard Rao</a>
+                <button id="nav-toggle" type="button" class="lg:hidden p-2 rounded-lg border border-slate-300 bg-slate-100 dark:bg-slate-700 dark:border-slate-600 text-slate-700 dark:text-slate-200" aria-label="{% trans '打开菜单' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <div class="hidden lg:flex items-center gap-6 text-sm font-medium">
+                    <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+                    <a href="{% url 'games:index' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "游戏" %}</a>
+                    <a href="{% url 'tools:index' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "工具" %}</a>
+                    <a href="{% url 'guestbook:guestbook' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "留言板" %}</a>
+                    <a href="{% url 'blog:blog_home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "博客" %}</a>
+                    {% if user.is_authenticated %}<a href="{% url 'chat:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "聊天室" %}</a>{% endif %}
+                    <a href="{% url 'blog:about_me' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "关于我" %}</a>
+
+                    <form action="{% url 'set_language' %}" method="post" id="lang-form" class="inline-block" data-current-lang="{{ request.LANGUAGE_CODE }}">
+                        {% csrf_token %}
+                        <input type="hidden" id="lang-next" name="next" value="{{ request.path }}">
+                        <select name="language" id="lang-select" class="bg-slate-100 border border-slate-300 text-slate-700 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200 rounded px-2 py-1 text-xs outline-none focus:border-sky-500">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for language in languages %}
+                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>{{ language.name_local }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+
+                    <select id="theme-toggle" class="bg-slate-100 border border-slate-300 text-slate-700 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200 rounded px-2 py-1 text-xs outline-none focus:border-sky-500">
+                        <option value="auto">{% trans "自动" %}</option>
+                        <option value="light">{% trans "浅色" %}</option>
+                        <option value="dark">{% trans "深色" %}</option>
+                    </select>
+
+                    {% if user.is_authenticated %}
+                        <span class="text-slate-600 dark:text-slate-300">{{ user.username }}</span>
+                        <form action="{% url 'blog:logout' %}" method="post" class="inline">
+                            {% csrf_token %}
+                            <button type="submit" class="hover:text-sky-600 dark:hover:text-sky-400 transition bg-transparent border-none p-0 text-sm font-medium">{% trans "登出" %}</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'blog:login' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "登录" %}</a>
+                        <a href="{% url 'blog:register' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "注册" %}</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div id="nav-menu" class="hidden lg:hidden mt-3 pt-3 border-t border-slate-200 dark:border-slate-700">
+                <div class="flex flex-col gap-3 text-sm font-medium">
+                    <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+                    <a href="{% url 'games:index' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "游戏" %}</a>
+                    <a href="{% url 'tools:index' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "工具" %}</a>
+                    <a href="{% url 'guestbook:guestbook' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "留言板" %}</a>
+                    <a href="{% url 'blog:blog_home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "博客" %}</a>
+                    {% if user.is_authenticated %}<a href="{% url 'chat:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "聊天室" %}</a>{% endif %}
+                    <a href="{% url 'blog:about_me' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "关于我" %}</a>
+
+                    <form action="{% url 'set_language' %}" method="post" id="lang-form-mobile" class="inline-block" data-current-lang="{{ request.LANGUAGE_CODE }}">
+                        {% csrf_token %}
+                        <input type="hidden" id="lang-next-mobile" name="next" value="{{ request.path }}">
+                        <select name="language" id="lang-select-mobile" class="bg-slate-100 border border-slate-300 text-slate-700 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200 rounded px-2 py-1 text-xs outline-none focus:border-sky-500">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for language in languages %}
+                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>{{ language.name_local }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+
+                    <select id="theme-toggle-mobile" class="bg-slate-100 border border-slate-300 text-slate-700 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200 rounded px-2 py-1 text-xs outline-none focus:border-sky-500 w-fit">
+                        <option value="auto">{% trans "自动" %}</option>
+                        <option value="light">{% trans "浅色" %}</option>
+                        <option value="dark">{% trans "深色" %}</option>
+                    </select>
+
+                    {% if user.is_authenticated %}
+                        <span class="text-slate-600 dark:text-slate-300">{{ user.username }}</span>
+                        <form action="{% url 'blog:logout' %}" method="post" class="inline">
+                            {% csrf_token %}
+                            <button type="submit" class="text-left hover:text-sky-600 dark:hover:text-sky-400 transition bg-transparent border-none p-0 text-sm font-medium">{% trans "登出" %}</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'blog:login' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "登录" %}</a>
+                        <a href="{% url 'blog:register' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "注册" %}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow">
+        {% block breadcrumbs %}{% endblock %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 dark:bg-slate-800 dark:border-slate-700 py-6 mt-auto transition-colors">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col gap-4 text-sm text-slate-600 dark:text-slate-400">
+            {% if friendly_links or user.is_superuser %}
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="font-medium">{% trans "友情链接" %}：</span>
+                    {% for link in friendly_links %}
+                        <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{{ link.name }}</a>{% if not forloop.last %}<span class="text-slate-300 dark:text-slate-600">|</span>{% endif %}
+                    {% endfor %}
+                    {% if user.is_superuser %}
+                        <a href="{% url 'core:links' %}" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">{% trans "编辑" %}</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
+                <span>&copy; {% now "Y" %} Leonard Rao</span>
+                <div class="flex items-center gap-4">
+                    <a href="https://github.com/tinagongtt-lang" target="_blank" rel="noopener noreferrer" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                    <span>{% trans "本站总访问量：" %}<span id="visit-count" class="text-sky-600 dark:text-sky-400 font-semibold">{{ visit_count }}</span></span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <button id="back-to-top" type="button" class="p-3 rounded-full bg-sky-600 text-white shadow-lg hover:bg-sky-700 dark:bg-sky-500 dark:hover:bg-sky-600" aria-label="{% trans '返回顶部' %}">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+    <script>
+        (function () {
+            const selects = document.querySelectorAll('[id^="theme-toggle"]');
+            const stored = localStorage.getItem('theme') || 'auto';
+            selects.forEach(s => s.value = stored);
+
+            function apply(theme) {
+                function isAutoDark() {
+                    const hour = new Date().getHours();
+                    return hour >= 18 || hour < 6;
+                }
+                const isDark = theme === 'dark' || (theme === 'auto' && isAutoDark());
+                document.documentElement.classList.toggle('dark', isDark);
+                localStorage.setItem('theme', theme);
+                selects.forEach(s => s.value = theme);
+            }
+
+            selects.forEach(s => s.addEventListener('change', e => apply(e.target.value)));
+            setInterval(() => {
+                const current = localStorage.getItem('theme') || 'auto';
+                apply(current);
+            }, 60000);
+        })();
+
+        (function updateVisitCount() {
+            fetch('/api/visit-count/')
+                .then(r => r.json())
+                .then(data => {
+                    const el = document.getElementById('visit-count');
+                    if (el && data.count !== undefined) el.textContent = data.count;
+                })
+                .catch(() => {});
+            setTimeout(updateVisitCount, 5000);
+        })();
+
+        (function () {
+            const navToggle = document.getElementById('nav-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('hidden');
+                });
+            }
+
+            document.querySelectorAll('[id^="lang-form"]').forEach(form => {
+                const select = form.querySelector('select[name="language"]');
+                const nextInput = form.querySelector('input[name="next"]');
+                if (!select || !nextInput) return;
+                const currentLang = form.dataset.currentLang;
+                const currentPrefix = '/' + currentLang + '/';
+                const currentRoot = '/' + currentLang;
+                select.addEventListener('change', function () {
+                    let path = window.location.pathname;
+                    if (path.startsWith(currentPrefix)) {
+                        path = path.slice(currentPrefix.length - 1);
+                    } else if (path === currentRoot) {
+                        path = '/';
+                    }
+                    nextInput.value = path;
+                    form.submit();
+                });
+            });
+
+            // Mobile nav auto hide/show on scroll
+            const mainNav = document.getElementById('main-nav');
+            let lastScrollY = window.scrollY;
+            if (mainNav && window.matchMedia('(max-width: 1023px)').matches) {
+                window.addEventListener('scroll', () => {
+                    const currentY = window.scrollY;
+                    if (currentY > lastScrollY && currentY > 80) {
+                        mainNav.classList.add('-translate-y-full');
+                    } else {
+                        mainNav.classList.remove('-translate-y-full');
+                    }
+                    lastScrollY = currentY;
+                }, { passive: true });
+            }
+
+            // Page load progress bar
+            const progress = document.getElementById('page-progress');
+            if (progress) {
+                progress.style.width = '70%';
+                window.addEventListener('load', () => { progress.style.width = '100%'; setTimeout(() => progress.remove(), 300); });
+            }
+
+            // Back to top
+            const btt = document.getElementById('back-to-top');
+            if (btt) {
+                window.addEventListener('scroll', () => {
+                    btt.classList.toggle('visible', window.scrollY > 300);
+                }, { passive: true });
+                btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            }
+        })();
+
+        {% if user.is_authenticated %}
+        (function chatNotify() {
+            let toast;
+            function showToast() {
+                if (!toast) {
+                    toast = document.createElement('a');
+                    toast.href = '{% url "chat:home" %}';
+                    toast.textContent = '{% trans "收到新的好友/群聊申请，点击查看" %}';
+                    toast.style.cssText = 'position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#0284c7;color:#fff;padding:10px 20px;border-radius:12px;z-index:999;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,.25);cursor:pointer;text-decoration:none;';
+                    document.body.appendChild(toast);
+                    setTimeout(() => { toast.style.display = 'none'; }, 6000);
+                }
+                toast.style.display = 'block';
+            }
+            function connect() {
+                const proto = location.protocol === 'https:' ? 'wss://' : 'ws://';
+                const ws = new WebSocket(proto + location.host + '/ws/chat-notify/');
+                ws.onmessage = () => {
+                    showToast();
+                    if (location.pathname === '{% url "chat:home" %}') {
+                        setTimeout(() => location.reload(), 1200);
+                    }
+                };
+                ws.onclose = () => setTimeout(connect, 3000);
+            }
+            connect();
+        })();
+        {% endif %}
+    </script>
+</body>
+</html>

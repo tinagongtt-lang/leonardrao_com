@@ -1,0 +1,14 @@
+{% if items %}
+<div class="max-w-5xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        {% for item in items %}
+            {% if not forloop.first %}<span class="mx-2 text-slate-300 dark:text-slate-600">/</span>{% endif %}
+            {% if item.url and not forloop.last %}
+                <a href="{{ item.url }}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{{ item.label }}</a>
+            {% else %}
+                <span class="text-slate-700 dark:text-slate-200">{{ item.label }}</span>
+            {% endif %}
+        {% endfor %}
+    </nav>
+</div>
+{% endif %}

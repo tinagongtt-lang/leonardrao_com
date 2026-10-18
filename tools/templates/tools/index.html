@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}{% load i18n %}
+
+{% block title %}{% trans "实用工具" %} - Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-5xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200">{% trans "实用工具" %}</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="max-w-5xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-8 text-center">{% trans "实用工具" %}</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <a href="{% url 'tools:timer' %}" class="group block rounded-2xl bg-white border border-slate-200 p-6 hover:border-sky-500 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 transition">
+            <h2 class="text-xl font-bold mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">{% trans "计时器" %}</h2>
+            <p class="text-slate-600 dark:text-slate-400">{% trans "设定时间，倒计时提醒" %}</p>
+        </a>
+        <a href="{% url 'tools:stopwatch' %}" class="group block rounded-2xl bg-white border border-slate-200 p-6 hover:border-sky-500 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 transition">
+            <h2 class="text-xl font-bold mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">{% trans "秒表" %}</h2>
+            <p class="text-slate-600 dark:text-slate-400">{% trans "开始、暂停、计圈、重置" %}</p>
+        </a>
+        <a href="{% url 'tools:base_converter' %}" class="group block rounded-2xl bg-white border border-slate-200 p-6 hover:border-sky-500 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 transition">
+            <h2 class="text-xl font-bold mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">{% trans "进制转换" %}</h2>
+            <p class="text-slate-600 dark:text-slate-400">{% trans "二 / 八 / 十 / 十六进制互转" %}</p>
+        </a>
+    </div>
+</section>
+{% endblock %}

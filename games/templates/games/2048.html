@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}{% load static %}{% load i18n %}
+
+{% block title %}2048 - Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-5xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <a href="{% url 'games:index' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "益智游戏" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200">2048</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="max-w-3xl mx-auto px-4 py-12 text-center">
+    <h1 class="text-3xl font-bold mb-2">2048</h1>
+    <p class="text-slate-600 dark:text-slate-400 mb-6">{% trans "使用方向键或滑动屏幕移动方块" %}</p>
+
+    <div class="flex justify-center items-center gap-6 mb-6">
+        <div class="text-lg text-slate-900 dark:text-slate-100">{% trans "得分：" %}<span id="score" class="font-bold text-sky-600 dark:text-sky-400">0</span></div>
+        <button id="restart" class="px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 font-semibold transition">{% trans "重新开始" %}</button>
+    </div>
+
+    <div class="flex justify-center mb-4">
+        <div id="board" class="grid grid-cols-4 gap-3 p-3 bg-slate-300 rounded-xl select-none touch-none dark:bg-slate-700">
+            {% for i in "x"|rjust:"16" %}
+            <div class="cell w-14 h-14 sm:w-20 sm:h-20 rounded-lg bg-slate-800 flex items-center justify-center text-base sm:text-xl md:text-2xl font-bold text-white transition"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="message" class="text-xl font-semibold text-emerald-600 dark:text-emerald-400 min-h-[2rem]" data-win="{% trans '恭喜你达成 2048！' %}" data-lose="{% trans '游戏结束，点击重新开始' %}"></div>
+</section>
+{% endblock %}
+
+{% block extra_head %}
+<script src="{% static 'games/2048.js' %}" defer></script>
+{% endblock %}

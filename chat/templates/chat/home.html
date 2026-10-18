@@ -1,0 +1,90 @@
+{% extends 'core/base.html' %}{% load i18n %}
+
+{% block title %}{% trans "聊天室" %} - Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-5xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200">{% trans "聊天室" %}</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="max-w-3xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-6 text-center">{% trans "聊天室" %}</h1>
+
+    <div class="rounded-2xl bg-white border border-slate-200 p-6 mb-6 dark:bg-slate-800 dark:border-slate-700 text-center">
+        <p class="text-sm text-slate-500 dark:text-slate-400">{% trans "我的账号码" %}</p>
+        <p class="text-4xl font-mono font-bold tracking-widest text-sky-600 dark:text-sky-400 select-all">{{ profile.friend_code }}</p>
+        <p class="text-xs text-slate-400 mt-1">{% trans "把这个号码发给朋友，对方输入即可加好友" %}</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+        <form method="post" action="{% url 'chat:add_friend' %}" class="rounded-2xl bg-white border border-slate-200 p-6 dark:bg-slate-800 dark:border-slate-700">
+            {% csrf_token %}
+            <h2 class="text-lg font-bold mb-3">{% trans "加好友" %}</h2>
+            <input name="code" maxlength="10" placeholder="{% trans '输入对方账号码' %}" required
+                   class="w-full mb-3 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700">
+            <button type="submit" class="w-full px-4 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700 transition">{% trans "添加" %}</button>
+        </form>
+
+        <form method="post" action="{% url 'chat:room_create' %}" class="rounded-2xl bg-white border border-slate-200 p-6 dark:bg-slate-800 dark:border-slate-700">
+            {% csrf_token %}
+            <h2 class="text-lg font-bold mb-3">{% trans "创建聊天室" %}</h2>
+            <input name="name" maxlength="100" placeholder="{% trans '聊天室名称' %}"
+                   class="w-full mb-3 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700">
+            <button type="submit" class="w-full px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition">{% trans "创建" %}</button>
+        </form>
+    </div>
+
+    {% if friend_requests or room_invites %}
+    <div class="rounded-2xl bg-amber-50 border border-amber-200 dark:bg-amber-900/30 dark:border-amber-700 p-4 mb-8 space-y-3" id="pending-box">
+        {% for fr in friend_requests %}
+        <div class="flex items-center justify-between gap-2">
+            <span><strong>{{ fr.from_user.username }}</strong> {% trans "请求加你为好友" %}</span>
+            <span class="flex gap-2">
+                <form method="post" action="{% url 'chat:friend_request_respond' pk=fr.pk action='accept' %}">{% csrf_token %}<button class="px-3 py-1 rounded-lg bg-emerald-600 text-white text-sm">{% trans "同意" %}</button></form>
+                <form method="post" action="{% url 'chat:friend_request_respond' pk=fr.pk action='decline' %}">{% csrf_token %}<button class="px-3 py-1 rounded-lg bg-slate-400 text-white text-sm">{% trans "拒绝" %}</button></form>
+            </span>
+        </div>
+        {% endfor %}
+        {% for inv in room_invites %}
+        <div class="flex items-center justify-between gap-2">
+            <span><strong>{{ inv.from_user.username }}</strong> {% trans "邀请你加入" %} <strong>{{ inv.room.name }}</strong></span>
+            <span class="flex gap-2">
+                <form method="post" action="{% url 'chat:room_invite_respond' pk=inv.pk action='accept' %}">{% csrf_token %}<button class="px-3 py-1 rounded-lg bg-emerald-600 text-white text-sm">{% trans "同意" %}</button></form>
+                <form method="post" action="{% url 'chat:room_invite_respond' pk=inv.pk action='decline' %}">{% csrf_token %}<button class="px-3 py-1 rounded-lg bg-slate-400 text-white text-sm">{% trans "拒绝" %}</button></form>
+            </span>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <h2 class="text-xl font-bold mb-3">{% trans "我的好友" %}</h2>
+    <div class="rounded-2xl bg-white border border-slate-200 dark:bg-slate-800 dark:border-slate-700 mb-8 divide-y divide-slate-100 dark:divide-slate-700">
+        {% for f in friends %}
+        <div class="px-4 py-3 flex items-center justify-between">
+            <span class="font-medium">{{ f.user.username }}</span>
+            <span class="font-mono text-sm text-slate-500 dark:text-slate-400">{{ f.friend_code }}</span>
+        </div>
+        {% empty %}
+        <p class="px-4 py-6 text-center text-slate-500 dark:text-slate-400">{% trans "还没有好友" %}</p>
+        {% endfor %}
+    </div>
+
+    <h2 class="text-xl font-bold mb-3">{% trans "我的聊天室" %}</h2>
+    <div class="rounded-2xl bg-white border border-slate-200 dark:bg-slate-800 dark:border-slate-700 divide-y divide-slate-100 dark:divide-slate-700">
+        {% for room in rooms %}
+        <a href="{% url 'chat:room' code=room.code %}" class="block px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700 transition">
+            <span class="font-medium">{{ room.name }}</span>
+            <span class="text-sm text-slate-500 dark:text-slate-400 ml-2">{{ room.members.count }} {% trans "人" %}</span>
+        </a>
+        {% empty %}
+        <p class="px-4 py-6 text-center text-slate-500 dark:text-slate-400">{% trans "还没有聊天室" %}</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

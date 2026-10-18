@@ -1,0 +1,103 @@
+{% load i18n %}
+<div class="rich-editor-wrapper" data-upload-url="{% url 'blog:upload_media' %}">
+    <div class="flex flex-wrap gap-2 mb-2">
+        <button type="button" data-cmd="bold" class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition">{% trans "B" %}</button>
+        <button type="button" data-cmd="italic" class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition">{% trans "I" %}</button>
+        <button type="button" data-cmd="underline" class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition">{% trans "U" %}</button>
+        <button type="button" data-cmd="formatBlock" data-arg="H2" class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition">{% trans "H2" %}</button>
+        <button type="button" data-cmd="formatBlock" data-arg="H3" class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition">{% trans "H3" %}</button>
+        <button type="button" data-cmd="insertUnorderedList" class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition">{% trans "• 列表" %}</button>
+        <button type="button" data-cmd="insertOrderedList" class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition">{% trans "1. 列表" %}</button>
+        <button type="button" id="rich-link" class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition">{% trans "链接" %}</button>
+        <label class="px-2 py-1 rounded bg-sky-100 dark:bg-sky-900 border border-sky-300 dark:border-sky-700 text-sky-700 dark:text-sky-300 text-xs font-medium hover:bg-sky-200 dark:hover:bg-sky-800 transition cursor-pointer">
+            {% trans "上传文件" %}
+            <input type="file" id="rich-file-upload" multiple class="hidden">
+        </label>
+        <label class="px-2 py-1 rounded bg-sky-100 dark:bg-sky-900 border border-sky-300 dark:border-sky-700 text-sky-700 dark:text-sky-300 text-xs font-medium hover:bg-sky-200 dark:hover:bg-sky-800 transition cursor-pointer">
+            {% trans "上传文件夹" %}
+            <input type="file" id="rich-folder-upload" webkitdirectory directory multiple class="hidden">
+        </label>
+    </div>
+    <div id="rich-editor" contenteditable="true" class="w-full min-h-[12rem] px-4 py-3 rounded-lg bg-white border border-slate-300 text-slate-900 focus:border-sky-500 outline-none dark:bg-slate-800 dark:border-slate-600 dark:text-white">
+        {% if value %}{{ value|safe }}{% endif %}
+    </div>
+</div>
+<script>
+(function () {
+    const wrapper = document.currentScript.previousElementSibling;
+    const editor = wrapper.querySelector('#rich-editor');
+    const hidden = document.getElementById('id_content');
+    const uploadUrl = wrapper.dataset.uploadUrl;
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    function sync() {
+        if (hidden) hidden.value = editor.innerHTML;
+    }
+    editor.addEventListener('input', sync);
+
+    wrapper.querySelectorAll('[data-cmd]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            editor.focus();
+            const cmd = btn.dataset.cmd;
+            const arg = btn.dataset.arg || false;
+            document.execCommand(cmd, false, arg);
+            sync();
+        });
+    });
+
+    wrapper.querySelector('#rich-link').addEventListener('click', () => {
+        const url = prompt('URL:');
+        if (url) {
+            editor.focus();
+            document.execCommand('createLink', false, url);
+            sync();
+        }
+    });
+
+    function insertMedia(url, file) {
+        editor.focus();
+        let html;
+        if (file.type.startsWith('image/')) {
+            html = `<img src="${url}" class="max-w-full rounded-lg my-2" alt="">`;
+        } else if (file.type.startsWith('video/')) {
+            html = `<video controls src="${url}" class="max-w-full rounded-lg my-2"></video>`;
+        } else if (file.type.startsWith('audio/')) {
+            html = `<audio controls src="${url}" class="w-full my-2"></audio>`;
+        } else {
+            html = `<a href="${url}" target="_blank" class="text-sky-600 hover:underline">${file.name}</a>`;
+        }
+        document.execCommand('insertHTML', false, html);
+        sync();
+    }
+
+    async function uploadFiles(files, isFolder) {
+        if (!files.length) return;
+        const formData = new FormData();
+        files.forEach(file => {
+            formData.append('files', file);
+            formData.append('paths', isFolder ? (file.webkitRelativePath || '') : '');
+        });
+        const resp = await fetch(uploadUrl, {
+            method: 'POST',
+            headers: {'X-CSRFToken': csrfToken},
+            body: formData,
+        });
+        const data = await resp.json();
+        (data.files || []).forEach((item, i) => {
+            insertMedia(item.url, files[i]);
+        });
+    }
+
+    wrapper.querySelector('#rich-file-upload').addEventListener('change', e => {
+        uploadFiles(Array.from(e.target.files), false);
+        e.target.value = '';
+    });
+    wrapper.querySelector('#rich-folder-upload').addEventListener('change', e => {
+        uploadFiles(Array.from(e.target.files), true);
+        e.target.value = '';
+    });
+
+    const form = editor.closest('form');
+    if (form) form.addEventListener('submit', sync);
+})();
+</script>

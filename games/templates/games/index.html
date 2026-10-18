@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}{% load i18n %}
+
+{% block title %}{% trans "益智游戏" %} - Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-5xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200">{% trans "益智游戏" %}</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="max-w-5xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-8 text-center">{% trans "益智游戏" %}</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+        <a href="{% url 'games:2048' %}" class="group block rounded-2xl bg-white border border-slate-200 p-8 hover:border-sky-500 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 transition">
+            <h2 class="text-2xl font-bold mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">2048</h2>
+            <p class="text-slate-600 dark:text-slate-400">{% trans "经典数字合成游戏" %}</p>
+        </a>
+        <a href="{% url 'games:maze3d' %}" class="group block rounded-2xl bg-white border border-slate-200 p-8 hover:border-sky-500 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 transition">
+            <h2 class="text-2xl font-bold mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">{% trans "3D 迷宫" %}</h2>
+            <p class="text-slate-600 dark:text-slate-400">{% trans "用 Three.js 实现的第一人称迷宫" %}</p>
+        </a>
+        <a href="{% url 'games:chess' %}" class="group block rounded-2xl bg-white border border-slate-200 p-8 hover:border-sky-500 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 transition">
+            <h2 class="text-2xl font-bold mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">{% trans "国际象棋" %}</h2>
+            <p class="text-slate-600 dark:text-slate-400">{% trans "人机对战（四个等级）或分享给朋友实时对弈" %}</p>
+        </a>
+        <a href="{% url 'games:xiangqi' %}" class="group block rounded-2xl bg-white border border-slate-200 p-8 hover:border-sky-500 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 transition">
+            <h2 class="text-2xl font-bold mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">{% trans "中国象棋" %}</h2>
+            <p class="text-slate-600 dark:text-slate-400">{% trans "人机对战（四个等级）或分享给朋友实时对弈" %}</p>
+        </a>
+        <a href="{% url 'games:go' %}" class="group block rounded-2xl bg-white border border-slate-200 p-8 hover:border-sky-500 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 transition">
+            <h2 class="text-2xl font-bold mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">{% trans "围棋" %}</h2>
+            <p class="text-slate-600 dark:text-slate-400">{% trans "9/13/19 路可选，人机或分享链接对弈" %}</p>
+        </a>
+        <a href="{% url 'games:gomoku' %}" class="group block rounded-2xl bg-white border border-slate-200 p-8 hover:border-sky-500 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 transition">
+            <h2 class="text-2xl font-bold mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">{% trans "五子棋" %}</h2>
+            <p class="text-slate-600 dark:text-slate-400">{% trans "五连即胜，人机或分享链接对弈" %}</p>
+        </a>
+    </div>
+</section>
+{% endblock %}

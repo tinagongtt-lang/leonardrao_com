@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .captcha-widget {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    .captcha-widget img.captcha {
+        border-radius: 0.5rem;
+        border: 1px solid #cbd5e1;
+        max-width: 100%;
+    }
+    .dark .captcha-widget img.captcha {
+        border-color: #475569;
+    }
+    .captcha-widget input[name="captcha_1"] {
+        width: 8rem;
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.5rem;
+        border: 1px solid #cbd5e1;
+        background: #fff;
+        color: #0f172a;
+        outline: none;
+    }
+    .captcha-widget input[name="captcha_1"]:focus {
+        border-color: #0ea5e9;
+    }
+    .dark .captcha-widget input[name="captcha_1"] {
+        background: #1e293b;
+        border-color: #475569;
+        color: #f1f5f9;
+    }
+    .dark .captcha-widget input[name="captcha_1"]:focus {
+        border-color: #0ea5e9;
+    }
+    .rich-content ul {
+        list-style-type: disc;
+        padding-left: 1.5rem;
+        margin-bottom: 0.75rem;
+    }
+    .rich-content ol {
+        list-style-type: decimal;
+        padding-left: 1.5rem;
+        margin-bottom: 0.75rem;
+    }
+    .rich-content h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    .rich-content h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+    .rich-content p {
+        margin-bottom: 0.75rem;
+    }
+    .rich-content img,
+    .rich-content video,
+    .rich-content audio {
+        max-width: 100%;
+        display: block;
+    }
+    .rich-content {
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+}
+
+#chess-board .piece-white {
+    color: #f8fafc;
+    -webkit-text-stroke: 1.5px #1e293b;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+#chess-board .piece-black {
+    color: #1e293b;
+    -webkit-text-stroke: 1.2px rgba(255, 255, 255, 0.35);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.25);
+}

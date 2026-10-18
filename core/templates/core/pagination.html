@@ -1,0 +1,12 @@
+{% load i18n %}
+{% if page_obj.has_other_pages %}
+<div class="flex items-center justify-center gap-2 mt-6">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query|urlencode }}{% endif %}{% if tag %}&tag={{ tag|urlencode }}{% endif %}" class="px-3 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 transition">{% trans "上一页" %}</a>
+    {% endif %}
+    <span class="text-sm text-slate-600 dark:text-slate-400">{% blocktrans with n=page_obj.number total=page_obj.paginator.num_pages %}第 {{ n }} / {{ total }} 页{% endblocktrans %}</span>
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query|urlencode }}{% endif %}{% if tag %}&tag={{ tag|urlencode }}{% endif %}" class="px-3 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 transition">{% trans "下一页" %}</a>
+    {% endif %}
+</div>
+{% endif %}

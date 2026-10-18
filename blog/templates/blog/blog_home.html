@@ -1,0 +1,84 @@
+{% extends 'core/base.html' %}{% load i18n %}{% load blog_extras %}
+
+{% block title %}{% trans "博客" %} | Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-5xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200">{% trans "博客" %}</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 py-8">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+        <h1 class="text-3xl font-bold">{% trans "博客" %}</h1>
+        {% if user.is_authenticated %}
+            <a href="{% url 'blog:post_create' %}" class="px-4 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700 transition w-fit">{% trans "写博客" %}</a>
+        {% endif %}
+    </div>
+
+    <form method="get" class="mb-6">
+        <div class="flex gap-2">
+            <input type="text" name="q" value="{{ query|default:'' }}" placeholder="{% trans '搜索博客...' %}" class="flex-1 px-4 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 focus:border-sky-500 outline-none dark:bg-slate-800 dark:border-slate-600 dark:text-white">
+            <button type="submit" class="px-4 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700 transition">{% trans "搜索" %}</button>
+        </div>
+    </form>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2">
+            <h2 class="text-xl font-semibold mb-4">
+                {% if query %}{% trans "搜索结果" %}{% elif tag %}{% trans "标签" %}: {{ tag }}{% else %}{% trans "最新博客" %}{% endif %}
+            </h2>
+            {% if latest_posts %}
+                <div class="space-y-4">
+                    {% for post in latest_posts %}
+                        <article class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-5 shadow-sm transition-colors">
+                            <a href="{{ post.get_absolute_url }}" class="text-lg font-semibold hover:text-sky-600 dark:hover:text-sky-400 transition">{{ post.title }}</a>
+                            <div class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                                <a href="{% url 'blog:author_detail' username=post.author.username %}" class="hover:underline">{{ post.author.username }}</a>
+                                · {{ post.created_at|date:"Y-m-d H:i" }}
+                                · {{ post.comment_count }} {% trans "评论" %}
+                            </div>
+                            {% with post.tags|split:',' as tag_list %}
+                                {% if tag_list %}
+                                    <div class="flex flex-wrap gap-2 mt-2">
+                                        {% for t in tag_list %}
+                                            <a href="{% url 'blog:blog_home' %}?tag={{ t|urlencode }}" class="text-xs px-2 py-1 rounded-full bg-sky-100 text-sky-700 hover:bg-sky-200 dark:bg-sky-900 dark:text-sky-300 dark:hover:bg-sky-800 transition">#{{ t }}</a>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
+                            <p class="text-slate-600 dark:text-slate-400 mt-2 text-sm break-words">{{ post.content|striptags|truncatechars:150 }}</p>
+                        </article>
+                    {% endfor %}
+                </div>
+                {% include 'core/pagination.html' with page_obj=latest_posts query=query tag=tag %}
+            {% else %}
+                <p class="text-slate-500 dark:text-slate-400">{% trans "还没有博客。" %}</p>
+            {% endif %}
+        </div>
+
+        <aside class="lg:col-span-1">
+            <h2 class="text-xl font-semibold mb-4">{% trans "博主" %}</h2>
+            {% if authors %}
+                <ul class="space-y-2">
+                    {% for author in authors %}
+                        <li>
+                            <a href="{% url 'blog:author_detail' username=author.username %}" class="flex items-center justify-between px-4 py-3 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 transition">
+                                <span class="font-medium">{{ author.username }}</span>
+                                <span class="text-xs text-slate-500 dark:text-slate-400">{{ author.blog_posts.count }} {% trans "篇" %}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-slate-500 dark:text-slate-400">{% trans "还没有用户发布博客。" %}</p>
+            {% endif %}
+        </aside>
+    </div>
+</div>
+{% endblock %}

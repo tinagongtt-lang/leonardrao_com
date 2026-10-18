@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %}{% load static %}{% load i18n %}
+
+{% block title %}{% trans "秒表" %} - Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-5xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <a href="{% url 'tools:index' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "实用工具" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200">{% trans "秒表" %}</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="max-w-2xl mx-auto px-4 py-12 text-center">
+    <h1 class="text-3xl font-bold mb-6">{% trans "秒表" %}</h1>
+
+    <div id="display" class="text-5xl sm:text-6xl font-mono font-bold mb-8 tabular-nums text-slate-900 dark:text-slate-100">00:00.00</div>
+
+    <div class="flex flex-wrap justify-center gap-4 mb-8">
+        <button id="start" class="px-6 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 font-semibold transition">{% trans "开始" %}</button>
+        <button id="stop" class="px-6 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 font-semibold transition">{% trans "停止" %}</button>
+        <button id="lap" class="px-6 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 font-semibold transition">{% trans "计圈" %}</button>
+        <button id="reset" class="px-6 py-2 rounded-lg bg-slate-600 hover:bg-slate-500 font-semibold transition">{% trans "重置" %}</button>
+    </div>
+
+    <div id="laps" class="text-left max-h-64 overflow-auto space-y-1 text-slate-700 dark:text-slate-300 font-mono"
+         data-lap="{% trans '计圈 #' %}"></div>
+</section>
+{% endblock %}
+
+{% block extra_head %}
+<script src="{% static 'tools/stopwatch.js' %}" defer></script>
+{% endblock %}

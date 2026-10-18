@@ -1,0 +1,54 @@
+{% extends 'core/base.html' %}{% load i18n %}
+
+{% block title %}{% trans "友情链接" %} | Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-5xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200">{% trans "友情链接" %}</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-8">
+    <h1 class="text-2xl sm:text-3xl font-bold mb-6">{% trans "友情链接" %}</h1>
+    {% if links %}
+        <div class="space-y-3">
+            {% for link in links %}
+                <div class="flex items-center justify-between bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm transition-colors">
+                    <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="text-sky-600 dark:text-sky-400 hover:underline font-medium break-all">{{ link.name }}</a>
+                    {% if user.is_superuser %}
+                        <form method="post" class="inline ml-2">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="pk" value="{{ link.pk }}">
+                            <button type="submit" class="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-800 flex items-center justify-center text-lg font-bold" aria-label="{% trans '删除' %}">-</button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-slate-500 dark:text-slate-400">{% trans "还没有友情链接。" %}</p>
+    {% endif %}
+
+    {% if user.is_superuser %}
+        <form method="post" class="mt-6 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm transition-colors flex flex-col sm:flex-row gap-3 items-start sm:items-end">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add">
+            <div class="flex-grow w-full">
+                <label class="block text-sm font-medium mb-1">{% trans "名称" %}</label>
+                <input type="text" name="name" required class="w-full px-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 focus:border-sky-500 outline-none dark:bg-slate-800 dark:border-slate-600 dark:text-white">
+            </div>
+            <div class="flex-grow w-full">
+                <label class="block text-sm font-medium mb-1">{% trans "链接" %}</label>
+                <input type="url" name="url" required class="w-full px-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 focus:border-sky-500 outline-none dark:bg-slate-800 dark:border-slate-600 dark:text-white">
+            </div>
+            <button type="submit" class="w-10 h-10 rounded-full bg-sky-600 text-white hover:bg-sky-700 flex items-center justify-center text-xl font-bold" aria-label="{% trans '添加' %}">+</button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

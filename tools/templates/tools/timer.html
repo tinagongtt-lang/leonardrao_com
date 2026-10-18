@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}{% load static %}{% load i18n %}
+
+{% block title %}{% trans "计时器" %} - Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-5xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <a href="{% url 'tools:index' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "实用工具" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200">{% trans "计时器" %}</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="max-w-2xl mx-auto px-4 py-12 text-center">
+    <h1 class="text-3xl font-bold mb-6">{% trans "计时器" %}</h1>
+
+    <div class="flex justify-center items-center gap-2 mb-8">
+        <input type="number" id="minutes" min="0" max="999" value="5" class="w-20 px-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 text-center text-xl focus:border-sky-500 outline-none dark:bg-slate-800 dark:border-slate-600 dark:text-white">
+        <span class="text-xl text-slate-600 dark:text-slate-400">{% trans "分" %}</span>
+        <input type="number" id="seconds" min="0" max="59" value="0" class="w-20 px-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 text-center text-xl focus:border-sky-500 outline-none dark:bg-slate-800 dark:border-slate-600 dark:text-white">
+        <span class="text-xl text-slate-600 dark:text-slate-400">{% trans "秒" %}</span>
+    </div>
+
+    <div id="display" class="text-5xl sm:text-6xl font-mono font-bold mb-8 tabular-nums text-slate-900 dark:text-slate-100">05:00</div>
+
+    <div id="timer-msgs" class="hidden" data-done="{% trans '时间到！' %}"></div>
+
+    <div class="flex flex-wrap justify-center gap-4">
+        <button id="start" class="px-6 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 font-semibold transition">{% trans "开始" %}</button>
+        <button id="pause" class="px-6 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 font-semibold transition">{% trans "暂停" %}</button>
+        <button id="reset" class="px-6 py-2 rounded-lg bg-slate-600 hover:bg-slate-500 font-semibold transition">{% trans "重置" %}</button>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_head %}
+<script src="{% static 'tools/timer.js' %}" defer></script>
+{% endblock %}

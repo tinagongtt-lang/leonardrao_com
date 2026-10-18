@@ -1,0 +1,691 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-15 20:52+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: blog/forms.py:54
+msgid "请输入标题"
+msgstr "キャプションを入力してください。"
+
+#: blog/forms.py:59
+msgid "用逗号分隔标签"
+msgstr ""
+
+#: blog/forms.py:89 blog/forms.py:104
+msgid "用户名"
+msgstr "ユーザ名"
+
+#: blog/forms.py:93 blog/forms.py:112
+msgid "密码"
+msgstr "パスワード"
+
+#: blog/forms.py:116
+msgid "确认密码"
+msgstr "パスワード確認"
+
+#: blog/forms.py:121 blog/templates/blog/post_detail.html:115
+#: guestbook/forms.py:10 guestbook/templates/guestbook/guestbook.html:36
+msgid "验证码"
+msgstr "認証コード"
+
+#: blog/forms.py:130
+#, fuzzy
+#| msgid "写下你的博客内容..."
+msgid "写下你的评论..."
+msgstr "ブログコンテンツを書く..."
+
+#: blog/models.py:10
+msgid "作者"
+msgstr "作家"
+
+#: blog/models.py:11
+msgid "标题"
+msgstr "タイトル"
+
+#: blog/models.py:12
+#, fuzzy
+#| msgid "留言内容"
+msgid "内容"
+msgstr "メッセージ"
+
+#: blog/models.py:13 blog/templates/blog/blog_home.html:34
+msgid "标签"
+msgstr ""
+
+#: blog/models.py:13
+msgid "用逗号分隔多个标签"
+msgstr ""
+
+#: blog/models.py:14
+msgid "创建时间"
+msgstr "作成日時"
+
+#: blog/models.py:15 blog/models.py:34
+msgid "更新时间"
+msgstr "アップデート時間"
+
+#: blog/models.py:19 blog/models.py:20
+msgid "博客文章"
+msgstr "ブログ投稿"
+
+#: blog/models.py:33 blog/models.py:37 blog/models.py:38 blog/models.py:41
+#: blog/templates/blog/about_me.html:3 blog/templates/blog/about_me.html:10
+#: blog/templates/blog/about_me.html:18
+#: blog/templates/blog/about_me_edit.html:10 core/templates/core/base.html:68
+#: core/templates/core/base.html:109
+msgid "关于我"
+msgstr "私のことで"
+
+#: blog/models.py:54 blog/templates/blog/author_detail.html:10
+#: blog/templates/blog/blog_home.html:3 blog/templates/blog/blog_home.html:10
+#: blog/templates/blog/blog_home.html:18
+#: blog/templates/blog/post_confirm_delete.html:10
+#: blog/templates/blog/post_detail.html:10
+#: blog/templates/blog/post_form.html:10 core/templates/core/base.html:67
+#: core/templates/core/base.html:108
+msgid "博客"
+msgstr "ブログ"
+
+#: blog/models.py:55
+msgid "评论者"
+msgstr "コメント投稿者"
+
+#: blog/models.py:56
+msgid "回复目标"
+msgstr "返信先"
+
+#: blog/models.py:57
+msgid "评论内容"
+msgstr "コメント内容"
+
+#: blog/models.py:58
+msgid "评论时间"
+msgstr "コメント日時"
+
+#: blog/models.py:62 blog/models.py:63
+#: blog/templates/blog/author_detail.html:33
+#: blog/templates/blog/blog_home.html:44
+#: blog/templates/blog/post_detail.html:50
+msgid "评论"
+msgstr "コメント"
+
+#: blog/templates/blog/about_me.html:8 blog/templates/blog/about_me_edit.html:8
+#: blog/templates/blog/author_detail.html:8
+#: blog/templates/blog/blog_home.html:8
+#: blog/templates/blog/post_confirm_delete.html:8
+#: blog/templates/blog/post_detail.html:8 blog/templates/blog/post_form.html:8
+#: blog/templates/blog/register.html:8 blog/templates/registration/login.html:8
+#: core/templates/core/base.html:63 core/templates/core/base.html:104
+#: core/templates/core/home.html:3 core/templates/core/links.html:8
+#: games/templates/games/2048.html:8 games/templates/games/index.html:8
+#: games/templates/games/maze3d.html:8
+#: guestbook/templates/guestbook/guestbook.html:8
+#: tools/templates/tools/base_converter.html:8
+#: tools/templates/tools/index.html:8 tools/templates/tools/stopwatch.html:8
+#: tools/templates/tools/timer.html:8
+msgid "首页"
+msgstr "ホーム"
+
+#: blog/templates/blog/about_me.html:20
+#: blog/templates/blog/about_me_edit.html:12
+#: blog/templates/blog/post_detail.html:44 core/templates/core/base.html:159
+msgid "编辑"
+msgstr "編集"
+
+#: blog/templates/blog/about_me_edit.html:3
+#: blog/templates/blog/about_me_edit.html:19
+msgid "编辑关于我"
+msgstr "自己紹介を編集"
+
+#: blog/templates/blog/about_me_edit.html:33
+#: blog/templates/blog/post_form.html:47
+msgid "保存"
+msgstr "保存"
+
+#: blog/templates/blog/about_me_edit.html:34
+#: blog/templates/blog/post_confirm_delete.html:30
+#: blog/templates/blog/post_form.html:48
+msgid "取消"
+msgstr "キャンセル"
+
+#: blog/templates/blog/author_detail.html:3
+#: blog/templates/blog/author_detail.html:12
+#: blog/templates/blog/author_detail.html:20
+#: blog/templates/blog/post_confirm_delete.html:12
+#: blog/templates/blog/post_detail.html:12
+msgid "的博客"
+msgstr "さんのブログ"
+
+#: blog/templates/blog/author_detail.html:22
+msgid "写新博客"
+msgstr "新しいブログを書く"
+
+#: blog/templates/blog/author_detail.html:41
+msgid "这个用户还没有发布博客。"
+msgstr "このユーザーはまだブログを公開していません。"
+
+#: blog/templates/blog/blog_home.html:20 blog/views.py:113
+msgid "写博客"
+msgstr "ブログ"
+
+#: blog/templates/blog/blog_home.html:26
+msgid "搜索博客..."
+msgstr ""
+
+#: blog/templates/blog/blog_home.html:27
+msgid "搜索"
+msgstr ""
+
+#: blog/templates/blog/blog_home.html:34
+msgid "搜索结果"
+msgstr ""
+
+#: blog/templates/blog/blog_home.html:34
+msgid "最新博客"
+msgstr "最新ブログ"
+
+#: blog/templates/blog/blog_home.html:61
+msgid "还没有博客。"
+msgstr "ブログはまだありません。"
+
+#: blog/templates/blog/blog_home.html:66
+msgid "博主"
+msgstr "ブロガー"
+
+#: blog/templates/blog/blog_home.html:73
+msgid "篇"
+msgstr "章"
+
+#: blog/templates/blog/blog_home.html:79
+msgid "还没有用户发布博客。"
+msgstr "まだブログを書いているユーザーはいません。"
+
+#: blog/templates/blog/post_confirm_delete.html:3
+msgid "删除博客"
+msgstr "ブログを削除"
+
+#: blog/templates/blog/post_confirm_delete.html:16
+#: blog/templates/blog/post_confirm_delete.html:29
+#: blog/templates/blog/post_detail.html:45 core/templates/core/links.html:28
+msgid "删除"
+msgstr "デリート"
+
+#: blog/templates/blog/post_confirm_delete.html:23
+msgid "确认删除"
+msgstr "削除の確認"
+
+#: blog/templates/blog/post_confirm_delete.html:25
+msgid "你确定要删除博客"
+msgstr "ブログを削除してもよろしいですか"
+
+#: blog/templates/blog/post_confirm_delete.html:25
+msgid "吗？"
+msgstr "わないのでしょうか。"
+
+#: blog/templates/blog/post_detail.html:27
+msgid "更新于"
+msgstr "更新日時："
+
+#: blog/templates/blog/post_detail.html:59
+#: blog/templates/blog/post_detail.html:81
+#: guestbook/templates/guestbook/guestbook.html:51
+msgid "匿名"
+msgstr "匿名"
+
+#: blog/templates/blog/post_detail.html:66
+msgid "回复"
+msgstr "返信"
+
+#: blog/templates/blog/post_detail.html:70
+#: blog/templates/blog/post_detail.html:90
+msgid "撤回"
+msgstr "取り消す"
+
+#: blog/templates/blog/post_detail.html:97
+msgid "暂无评论"
+msgstr "まだコメントはありません。"
+
+#: blog/templates/blog/post_detail.html:105
+msgid "回复中"
+msgstr "返信中"
+
+#: blog/templates/blog/post_detail.html:106
+msgid "取消回复"
+msgstr "返信をキャンセル"
+
+#: blog/templates/blog/post_detail.html:123
+msgid "发表评论"
+msgstr "コメントを投稿"
+
+#: blog/templates/blog/register.html:3 blog/templates/blog/register.html:10
+#: blog/templates/blog/register.html:17 blog/templates/blog/register.html:35
+#: blog/templates/registration/login.html:36 core/templates/core/base.html:97
+#: core/templates/core/base.html:138
+msgid "注册"
+msgstr "登録"
+
+#: blog/templates/blog/register.html:38
+msgid "已有账号？"
+msgstr "すでにアカウントをお持ちですか？"
+
+#: blog/templates/blog/register.html:38
+#: blog/templates/registration/login.html:3
+#: blog/templates/registration/login.html:10
+#: blog/templates/registration/login.html:17
+#: blog/templates/registration/login.html:33 core/templates/core/base.html:96
+#: core/templates/core/base.html:137
+msgid "登录"
+msgstr "ログイン"
+
+#: blog/templates/blog/rich_editor.html:4
+msgid "B"
+msgstr "B"
+
+#: blog/templates/blog/rich_editor.html:5
+msgid "I"
+msgstr "I"
+
+#: blog/templates/blog/rich_editor.html:6
+msgid "U"
+msgstr "U"
+
+#: blog/templates/blog/rich_editor.html:7
+msgid "H2"
+msgstr "H2"
+
+#: blog/templates/blog/rich_editor.html:8
+msgid "H3"
+msgstr "H3"
+
+#: blog/templates/blog/rich_editor.html:9
+msgid "• 列表"
+msgstr "箇条書き"
+
+#: blog/templates/blog/rich_editor.html:10
+msgid "1. 列表"
+msgstr "番号付きリスト"
+
+#: blog/templates/blog/rich_editor.html:11 core/templates/core/links.html:47
+msgid "链接"
+msgstr "リンク"
+
+#: blog/templates/blog/rich_editor.html:13
+msgid "上传文件"
+msgstr "ファイルをアップロード"
+
+#: blog/templates/blog/rich_editor.html:17
+msgid "上传文件夹"
+msgstr "フォルダをアップロード"
+
+#: blog/templates/registration/login.html:36
+msgid "还没有账号？"
+msgstr "アカウントをお持ちではありませんか？"
+
+#: blog/views.py:83
+msgid "评论已发表"
+msgstr "コメントを投稿しました。"
+
+#: blog/views.py:85
+msgid "评论提交失败，请检查验证码"
+msgstr "コメントの投稿に失敗しました。認証コードを確認してください。"
+
+#: blog/views.py:96
+msgid "评论已删除"
+msgstr "コメントを削除しました。"
+
+#: blog/views.py:98
+#, fuzzy
+#| msgid "你没有权限删除这篇博客"
+msgid "你没有权限删除这条评论"
+msgstr "このブログを削除する権限がありません"
+
+#: blog/views.py:109
+msgid "博客已发布"
+msgstr "ブログが公開されました"
+
+#: blog/views.py:121
+msgid "你没有权限编辑这篇博客"
+msgstr "このブログを編集する権限がありません"
+
+#: blog/views.py:126
+msgid "博客已更新"
+msgstr "ブログが更新されました"
+
+#: blog/views.py:130
+msgid "编辑博客"
+msgstr "ブログを編集"
+
+#: blog/views.py:139
+msgid "你没有权限删除这篇博客"
+msgstr "このブログを削除する権限がありません"
+
+#: blog/views.py:143
+msgid "博客已删除"
+msgstr "ブログを削除しました"
+
+#: blog/views.py:156
+msgid "只有超级用户可以编辑关于我"
+msgstr "パワーユーザーのみが自分について編集できます"
+
+#: blog/views.py:162
+msgid "关于我已更新"
+msgstr "更新した内容について"
+
+#: blog/views.py:171
+msgid "注册成功，请登录"
+msgstr "登録が完了しました。ログインしてください"
+
+#: core/templates/core/base.html:8 core/templates/core/base.html:10
+msgid "Leonard Rao 的个人网站，包含博客、游戏、工具和留言板。"
+msgstr ""
+
+#: core/templates/core/base.html:57
+msgid "打开菜单"
+msgstr "メニューを開く"
+
+#: core/templates/core/base.html:64 core/templates/core/base.html:105
+msgid "游戏"
+msgstr "ゲーム"
+
+#: core/templates/core/base.html:65 core/templates/core/base.html:106
+msgid "工具"
+msgstr "ツール"
+
+#: core/templates/core/base.html:66 core/templates/core/base.html:107
+#: guestbook/templates/guestbook/guestbook.html:3
+#: guestbook/templates/guestbook/guestbook.html:10
+#: guestbook/templates/guestbook/guestbook.html:17
+msgid "留言板"
+msgstr "掲示板"
+
+#: core/templates/core/base.html:84 core/templates/core/base.html:125
+msgid "自动"
+msgstr "自動"
+
+#: core/templates/core/base.html:85 core/templates/core/base.html:126
+msgid "浅色"
+msgstr "ライト"
+
+#: core/templates/core/base.html:86 core/templates/core/base.html:127
+msgid "深色"
+msgstr "ダーク"
+
+#: core/templates/core/base.html:93 core/templates/core/base.html:134
+msgid "登出"
+msgstr "サインアウト"
+
+#: core/templates/core/base.html:154 core/templates/core/links.html:3
+#: core/templates/core/links.html:10 core/templates/core/links.html:17
+msgid "友情链接"
+msgstr "相互リンク"
+
+#: core/templates/core/base.html:170
+msgid "本站总访问量："
+msgstr "総アクセス数："
+
+#: core/templates/core/base.html:175
+msgid "返回顶部"
+msgstr ""
+
+#: core/templates/core/home.html:10
+msgid "个人网站 · 益智游戏 · 实用工具"
+msgstr "個人サイト · パズルゲーム · 便利ツール"
+
+#: core/templates/core/home.html:15 games/templates/games/2048.html:10
+#: games/templates/games/index.html:3 games/templates/games/index.html:10
+#: games/templates/games/index.html:17 games/templates/games/maze3d.html:10
+msgid "益智游戏"
+msgstr "パズルゲーム"
+
+#: core/templates/core/home.html:16
+msgid "2048、3D 迷宫"
+msgstr "2048、3D 迷路"
+
+#: core/templates/core/home.html:20
+#: tools/templates/tools/base_converter.html:10
+#: tools/templates/tools/index.html:3 tools/templates/tools/index.html:10
+#: tools/templates/tools/index.html:17 tools/templates/tools/stopwatch.html:10
+#: tools/templates/tools/timer.html:10
+msgid "实用工具"
+msgstr "便利ツール"
+
+#: core/templates/core/home.html:21
+msgid "计时器、秒表、进制转换"
+msgstr "タイマー、ストップウォッチ、進数変換"
+
+#: core/templates/core/links.html:35
+msgid "还没有友情链接。"
+msgstr "相互リンクはまだありません。"
+
+#: core/templates/core/links.html:43
+msgid "名称"
+msgstr "名前"
+
+#: core/templates/core/links.html:50
+msgid "添加"
+msgstr "追加"
+
+#: core/templates/core/pagination.html:5
+msgid "上一页"
+msgstr ""
+
+#: core/templates/core/pagination.html:7
+#, python-format
+msgid "第 %(n)s / %(total)s 页"
+msgstr ""
+
+#: core/templates/core/pagination.html:9
+msgid "下一页"
+msgstr ""
+
+#: core/views.py:38
+msgid "链接已添加"
+msgstr ""
+
+#: core/views.py:43
+msgid "链接已删除"
+msgstr ""
+
+#: games/templates/games/2048.html:20
+msgid "使用方向键或滑动屏幕移动方块"
+msgstr "方向キーまたはスワイプでブロックを動かす"
+
+#: games/templates/games/2048.html:23
+msgid "得分："
+msgstr "スコア："
+
+#: games/templates/games/2048.html:24 games/templates/games/maze3d.html:22
+msgid "重新开始"
+msgstr "リスタート"
+
+#: games/templates/games/2048.html:35
+msgid "恭喜你达成 2048！"
+msgstr "2048 達成おめでとう！"
+
+#: games/templates/games/2048.html:35
+msgid "游戏结束，点击重新开始"
+msgstr "ゲームオーバー、リスタートをクリック"
+
+#: games/templates/games/index.html:22
+msgid "经典数字合成游戏"
+msgstr "クラシックな数字合成ゲーム"
+
+#: games/templates/games/index.html:25 games/templates/games/maze3d.html:3
+#: games/templates/games/maze3d.html:12 games/templates/games/maze3d.html:20
+msgid "3D 迷宫"
+msgstr "3D 迷路"
+
+#: games/templates/games/index.html:26
+msgid "用 Three.js 实现的第一人称迷宫"
+msgstr "Three.js で作った一人称視点迷路"
+
+#: games/templates/games/maze3d.html:21
+msgid "W / A / S / D 或方向键移动，找到绿色终点"
+msgstr "W / A / S / D または方向キーで移動し、緑のゴールを見つける"
+
+#: games/templates/games/maze3d.html:23
+msgid "你走出了迷宫！"
+msgstr "迷路を脱出した！"
+
+#: guestbook/forms.py:11
+msgid "验证码错误"
+msgstr "認証コードが違います"
+
+#: guestbook/forms.py:22
+msgid "你的昵称"
+msgstr "ニックネーム"
+
+#: guestbook/forms.py:28
+msgid "写下你想说的话..."
+msgstr "伝えたいことを書いてください..."
+
+#: guestbook/templates/guestbook/guestbook.html:22
+msgid "昵称"
+msgstr "ニックネーム"
+
+#: guestbook/templates/guestbook/guestbook.html:29
+msgid "留言内容"
+msgstr "メッセージ"
+
+#: guestbook/templates/guestbook/guestbook.html:44
+msgid "发表留言"
+msgstr "投稿"
+
+#: guestbook/templates/guestbook/guestbook.html:57
+msgid "还没有留言，来做第一个吧！"
+msgstr "まだメッセージがありません。最初のメッセージを書こう！"
+
+#: tools/templates/tools/base_converter.html:3
+#: tools/templates/tools/base_converter.html:12
+#: tools/templates/tools/base_converter.html:19
+#: tools/templates/tools/index.html:29
+msgid "进制转换"
+msgstr "進数変換"
+
+#: tools/templates/tools/base_converter.html:23
+msgid "输入数值"
+msgstr "入力値"
+
+#: tools/templates/tools/base_converter.html:24
+msgid "输入数字"
+msgstr "数字を入力"
+
+#: tools/templates/tools/base_converter.html:28
+msgid "输入进制"
+msgstr "入力の進数"
+
+#: tools/templates/tools/base_converter.html:30
+#: tools/templates/tools/base_converter.html:40
+msgid "二进制"
+msgstr "2進数"
+
+#: tools/templates/tools/base_converter.html:31
+#: tools/templates/tools/base_converter.html:41
+msgid "八进制"
+msgstr "8進数"
+
+#: tools/templates/tools/base_converter.html:32
+#: tools/templates/tools/base_converter.html:42
+msgid "十进制"
+msgstr "10進数"
+
+#: tools/templates/tools/base_converter.html:33
+#: tools/templates/tools/base_converter.html:43
+msgid "十六进制"
+msgstr "16進数"
+
+#: tools/templates/tools/base_converter.html:38
+msgid "目标进制"
+msgstr "変換先の進数"
+
+#: tools/templates/tools/base_converter.html:47
+msgid "转换"
+msgstr "変換"
+
+#: tools/templates/tools/base_converter.html:50
+msgid "结果"
+msgstr "結果"
+
+#: tools/templates/tools/base_converter.html:51
+msgid "输入格式错误"
+msgstr "入力形式が正しくありません"
+
+#: tools/templates/tools/index.html:21 tools/templates/tools/timer.html:3
+#: tools/templates/tools/timer.html:12 tools/templates/tools/timer.html:19
+msgid "计时器"
+msgstr "タイマー"
+
+#: tools/templates/tools/index.html:22
+msgid "设定时间，倒计时提醒"
+msgstr "時間を設定してカウントダウン"
+
+#: tools/templates/tools/index.html:25 tools/templates/tools/stopwatch.html:3
+#: tools/templates/tools/stopwatch.html:12
+#: tools/templates/tools/stopwatch.html:19
+msgid "秒表"
+msgstr "ストップウォッチ"
+
+#: tools/templates/tools/index.html:26
+msgid "开始、暂停、计圈、重置"
+msgstr "開始、停止、ラップ、リセット"
+
+#: tools/templates/tools/index.html:30
+msgid "二 / 八 / 十 / 十六进制互转"
+msgstr "2 / 8 / 10 / 16進数の相互変換"
+
+#: tools/templates/tools/stopwatch.html:24 tools/templates/tools/timer.html:33
+msgid "开始"
+msgstr "開始"
+
+#: tools/templates/tools/stopwatch.html:25
+msgid "停止"
+msgstr "停止"
+
+#: tools/templates/tools/stopwatch.html:26
+msgid "计圈"
+msgstr "ラップ"
+
+#: tools/templates/tools/stopwatch.html:27 tools/templates/tools/timer.html:35
+msgid "重置"
+msgstr "リセット"
+
+#: tools/templates/tools/stopwatch.html:31
+msgid "计圈 #"
+msgstr "ラップ #"
+
+#: tools/templates/tools/timer.html:23
+msgid "分"
+msgstr "分"
+
+#: tools/templates/tools/timer.html:25
+msgid "秒"
+msgstr "秒"
+
+#: tools/templates/tools/timer.html:30
+msgid "时间到！"
+msgstr "時間です！"
+
+#: tools/templates/tools/timer.html:34
+msgid "暂停"
+msgstr "一時停止"
+
+#~ msgid "编辑关于我的内容..."
+#~ msgstr "自己紹介を編集..."
+
+#~ msgid "请输入答案"
+#~ msgstr "答えを入力"

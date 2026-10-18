@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}{% load i18n %}
+
+{% block title %}{{ author.username }} {% trans "的博客" %} | Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-5xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <a href="{% url 'blog:blog_home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "博客" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200">{{ author.username }}{% trans "的博客" %}</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 py-8">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <h1 class="text-3xl font-bold">{{ author.username }}{% trans "的博客" %}</h1>
+        {% if user == author %}
+            <a href="{% url 'blog:post_create' %}" class="px-4 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700 transition w-fit">{% trans "写新博客" %}</a>
+        {% endif %}
+    </div>
+
+    {% if posts %}
+        <div class="space-y-4">
+            {% for post in posts %}
+                <article class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-5 shadow-sm transition-colors">
+                    <a href="{{ post.get_absolute_url }}" class="text-lg font-semibold hover:text-sky-600 dark:hover:text-sky-400 transition">{{ post.title }}</a>
+                    <div class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                        {{ post.created_at|date:"Y-m-d H:i" }}
+                        · {{ post.comment_count }} {% trans "评论" %}
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400 mt-2 text-sm break-words">{{ post.content|striptags|truncatechars:150 }}</p>
+                </article>
+            {% endfor %}
+        </div>
+        {% include 'core/pagination.html' with page_obj=posts %}
+    {% else %}
+        <p class="text-slate-500 dark:text-slate-400">{% trans "这个用户还没有发布博客。" %}</p>
+    {% endif %}
+</div>
+{% endblock %}

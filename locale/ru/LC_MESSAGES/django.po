@@ -1,0 +1,477 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-11 17:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: blog/forms.py:19
+msgid "请输入标题"
+msgstr "Введите заголовок"
+
+#: blog/forms.py:24
+msgid "写下你的博客内容..."
+msgstr "Напишите в своем блоге..."
+
+#: blog/forms.py:37
+msgid "编辑关于我的内容..."
+msgstr "Я не могу сказать, что это не так."
+
+#: blog/forms.py:49
+msgid "用户名"
+msgstr "Пользовательское имя"
+
+#: blog/forms.py:53
+msgid "密码"
+msgstr "Коды"
+
+#: blog/forms.py:57
+msgid "确认密码"
+msgstr "Подтверждение пароля"
+
+#: blog/models.py:10
+msgid "作者"
+msgstr "Автор"
+
+#: blog/models.py:11
+msgid "标题"
+msgstr "Заголовок"
+
+#: blog/models.py:12
+msgid "内容"
+msgstr "Содержание"
+
+#: blog/models.py:13
+msgid "创建时间"
+msgstr "Время создания"
+
+#: blog/models.py:14 blog/models.py:30
+msgid "更新时间"
+msgstr "Сообщение"
+
+#: blog/models.py:18 blog/models.py:19
+msgid "博客文章"
+msgstr "Статьи в блоге"
+
+#: blog/models.py:29 blog/models.py:33 blog/models.py:34 blog/models.py:37
+#: blog/templates/blog/about_me.html:3 blog/templates/blog/about_me.html:8
+#: core/templates/core/base.html:50 core/templates/core/base.html:91
+msgid "关于我"
+msgstr "О себе"
+
+#: blog/templates/blog/about_me.html:10
+#: blog/templates/blog/post_detail.html:21
+msgid "编辑"
+msgstr "Редакция"
+
+#: blog/templates/blog/about_me_edit.html:3
+#: blog/templates/blog/about_me_edit.html:7
+msgid "编辑关于我"
+msgstr "Редакция о мне"
+
+#: blog/templates/blog/about_me_edit.html:21
+#: blog/templates/blog/post_form.html:23
+msgid "保存"
+msgstr "Сохранить"
+
+#: blog/templates/blog/about_me_edit.html:22
+#: blog/templates/blog/post_confirm_delete.html:14
+#: blog/templates/blog/post_form.html:24
+msgid "取消"
+msgstr "Отмена"
+
+#: blog/templates/blog/author_detail.html:3
+#: blog/templates/blog/author_detail.html:8
+msgid "的博客"
+msgstr "Блог"
+
+#: blog/templates/blog/author_detail.html:10
+msgid "写新博客"
+msgstr "Написать новый блог"
+
+#: blog/templates/blog/author_detail.html:24
+msgid "这个用户还没有发布博客。"
+msgstr "Он не опубликовал своего блога."
+
+#: blog/templates/blog/blog_home.html:3 blog/templates/blog/blog_home.html:8
+#: core/templates/core/base.html:49 core/templates/core/base.html:90
+msgid "博客"
+msgstr "Блог"
+
+#: blog/templates/blog/blog_home.html:11 blog/views.py:47
+msgid "写博客"
+msgstr "Блог"
+
+#: blog/templates/blog/blog_home.html:13 blog/templates/blog/register.html:3
+#: blog/templates/blog/register.html:7 blog/templates/blog/register.html:25
+#: blog/templates/registration/login.html:26 core/templates/core/base.html:79
+#: core/templates/core/base.html:120
+msgid "注册"
+msgstr "Регистрация"
+
+#: blog/templates/blog/blog_home.html:14 blog/templates/blog/register.html:28
+#: blog/templates/registration/login.html:3
+#: blog/templates/registration/login.html:7
+#: blog/templates/registration/login.html:23 core/templates/core/base.html:78
+#: core/templates/core/base.html:119
+msgid "登录"
+msgstr "Зарегистрироваться"
+
+#: blog/templates/blog/blog_home.html:21
+msgid "最新博客"
+msgstr "Последние блоги"
+
+#: blog/templates/blog/blog_home.html:35
+msgid "还没有博客。"
+msgstr "Не было блога."
+
+#: blog/templates/blog/blog_home.html:40
+msgid "博主"
+msgstr "Блогер"
+
+#: blog/templates/blog/blog_home.html:47
+msgid "篇"
+msgstr "Описание"
+
+#: blog/templates/blog/blog_home.html:53
+msgid "还没有用户发布博客。"
+msgstr "Не было ни одного пользователя, который бы опубликовал блог."
+
+#: blog/templates/blog/post_confirm_delete.html:3
+msgid "删除博客"
+msgstr "Удаление блога"
+
+#: blog/templates/blog/post_confirm_delete.html:7
+msgid "确认删除"
+msgstr "Удаление подтверждается"
+
+#: blog/templates/blog/post_confirm_delete.html:9
+msgid "你确定要删除博客"
+msgstr "Вы уверены, что хотите удалить блог"
+
+#: blog/templates/blog/post_confirm_delete.html:9
+msgid "吗？"
+msgstr "Что?"
+
+#: blog/templates/blog/post_confirm_delete.html:13
+#: blog/templates/blog/post_detail.html:22
+msgid "删除"
+msgstr "Удаление"
+
+#: blog/templates/blog/post_detail.html:13
+msgid "更新于"
+msgstr "Обновлено в"
+
+#: blog/templates/blog/register.html:28
+msgid "已有账号？"
+msgstr "У вас есть счет?"
+
+#: blog/templates/registration/login.html:26
+msgid "还没有账号？"
+msgstr "У вас нет счета?"
+
+#: blog/views.py:43
+msgid "博客已发布"
+msgstr "Блог опубликован"
+
+#: blog/views.py:55
+msgid "你没有权限编辑这篇博客"
+msgstr "Вы не имеете права редактировать этот блог."
+
+#: blog/views.py:60
+msgid "博客已更新"
+msgstr "Блог обновлен"
+
+#: blog/views.py:64
+msgid "编辑博客"
+msgstr "Редакция блога"
+
+#: blog/views.py:73
+msgid "你没有权限删除这篇博客"
+msgstr "Вы не имеете права удалять этот блог."
+
+#: blog/views.py:77
+msgid "博客已删除"
+msgstr "Блог удален"
+
+#: blog/views.py:90
+msgid "只有超级用户可以编辑关于我"
+msgstr "Только суперпользователи могут редактировать обо мне."
+
+#: blog/views.py:96
+msgid "关于我已更新"
+msgstr "О том, как я обновляюсь"
+
+#: blog/views.py:105
+msgid "注册成功，请登录"
+msgstr "Успешно зарегистрироваться, пожалуйста, зарегистрируйтесь"
+
+#: core/templates/core/base.html:39
+msgid "打开菜单"
+msgstr "Откройте меню"
+
+#: core/templates/core/base.html:45 core/templates/core/base.html:86
+#: core/templates/core/home.html:3
+msgid "首页"
+msgstr "Главная страница"
+
+#: core/templates/core/base.html:46 core/templates/core/base.html:87
+msgid "游戏"
+msgstr "Игры"
+
+#: core/templates/core/base.html:47 core/templates/core/base.html:88
+msgid "工具"
+msgstr "Инструменты"
+
+#: core/templates/core/base.html:48 core/templates/core/base.html:89
+#: guestbook/templates/guestbook/guestbook.html:3
+#: guestbook/templates/guestbook/guestbook.html:7
+msgid "留言板"
+msgstr "Послание"
+
+#: core/templates/core/base.html:66 core/templates/core/base.html:107
+msgid "自动"
+msgstr "Автоматическая"
+
+#: core/templates/core/base.html:67 core/templates/core/base.html:108
+msgid "浅色"
+msgstr "Некрасивый"
+
+#: core/templates/core/base.html:68 core/templates/core/base.html:109
+msgid "深色"
+msgstr "Глубокое"
+
+#: core/templates/core/base.html:75 core/templates/core/base.html:116
+msgid "登出"
+msgstr "Выйти"
+
+#: core/templates/core/base.html:134
+msgid "本站总访问量："
+msgstr "Общее количество посещений сайта:"
+
+#: core/templates/core/home.html:10
+msgid "个人网站 · 益智游戏 · 实用工具"
+msgstr "Персональные сайты; Игры с удовольствием; Практические инструменты"
+
+#: core/templates/core/home.html:15 games/templates/games/index.html:3
+#: games/templates/games/index.html:7
+msgid "益智游戏"
+msgstr "Игры на пользу"
+
+#: core/templates/core/home.html:16
+msgid "2048、3D 迷宫"
+msgstr "2048 - 3D лабиринт"
+
+#: core/templates/core/home.html:20 tools/templates/tools/index.html:3
+#: tools/templates/tools/index.html:7
+msgid "实用工具"
+msgstr "Удобные инструменты"
+
+#: core/templates/core/home.html:21
+msgid "计时器、秒表、进制转换"
+msgstr "Минусы, секундомеры, ипотечные преобразования"
+
+#: games/templates/games/2048.html:8
+msgid "使用方向键或滑动屏幕移动方块"
+msgstr "Используйте руководящие кнопки или передвигайте кнопки экрана"
+
+#: games/templates/games/2048.html:11
+msgid "得分："
+msgstr "Счет:"
+
+#: games/templates/games/2048.html:12 games/templates/games/maze3d.html:10
+msgid "重新开始"
+msgstr "Возобновление"
+
+#: games/templates/games/2048.html:23
+msgid "恭喜你达成 2048！"
+msgstr "Поздравляю вас с 2048 годом!"
+
+#: games/templates/games/2048.html:23
+msgid "游戏结束，点击重新开始"
+msgstr "Игры закончились, нажмите на \"Начать снова\""
+
+#: games/templates/games/index.html:12
+msgid "经典数字合成游戏"
+msgstr "Классические цифровые игры"
+
+#: games/templates/games/index.html:15 games/templates/games/maze3d.html:3
+#: games/templates/games/maze3d.html:8
+msgid "3D 迷宫"
+msgstr "3D лабиринт"
+
+#: games/templates/games/index.html:16
+msgid "用 Three.js 实现的第一人称迷宫"
+msgstr ""
+"Первый человек, который сделал это с помощью Three.js, назвал это "
+"лабиринтом."
+
+#: games/templates/games/maze3d.html:9
+msgid "W / A / S / D 或方向键移动，找到绿色终点"
+msgstr ""
+"W / A / S / D или движение кнопки направления, чтобы найти зеленый конец"
+
+#: games/templates/games/maze3d.html:11
+msgid "你走出了迷宫！"
+msgstr "Ты вышла из лабиринта!"
+
+#: guestbook/forms.py:10 guestbook/templates/guestbook/guestbook.html:26
+msgid "验证码"
+msgstr "Проверяющий код"
+
+#: guestbook/forms.py:11
+msgid "验证码错误"
+msgstr "Проверка ошибок кода"
+
+#: guestbook/forms.py:22
+msgid "你的昵称"
+msgstr "Твоё имя."
+
+#: guestbook/forms.py:28
+msgid "写下你想说的话..."
+msgstr "Напиши, что ты хочешь сказать..."
+
+#: guestbook/templates/guestbook/guestbook.html:12
+msgid "昵称"
+msgstr "\"Открытие\""
+
+#: guestbook/templates/guestbook/guestbook.html:19
+msgid "留言内容"
+msgstr "Содержание сообщения"
+
+#: guestbook/templates/guestbook/guestbook.html:53
+msgid "发表留言"
+msgstr "Сообщение"
+
+#: guestbook/templates/guestbook/guestbook.html:60
+msgid "匿名"
+msgstr "Анонимность"
+
+#: guestbook/templates/guestbook/guestbook.html:66
+msgid "还没有留言，来做第一个吧！"
+msgstr "И не было ни одного послания, и не было ни одного послания."
+
+#: tools/templates/tools/base_converter.html:3
+#: tools/templates/tools/base_converter.html:7
+#: tools/templates/tools/index.html:19
+msgid "进制转换"
+msgstr "Имеющий в виду преобразование"
+
+#: tools/templates/tools/base_converter.html:11
+msgid "输入数值"
+msgstr "Вводные значения"
+
+#: tools/templates/tools/base_converter.html:12
+msgid "输入数字"
+msgstr "Вводные цифры"
+
+#: tools/templates/tools/base_converter.html:16
+msgid "输入进制"
+msgstr "Вводы"
+
+#: tools/templates/tools/base_converter.html:18
+#: tools/templates/tools/base_converter.html:28
+msgid "二进制"
+msgstr "Двойная система"
+
+#: tools/templates/tools/base_converter.html:19
+#: tools/templates/tools/base_converter.html:29
+msgid "八进制"
+msgstr "Восемь-восемь"
+
+#: tools/templates/tools/base_converter.html:20
+#: tools/templates/tools/base_converter.html:30
+msgid "十进制"
+msgstr "Десятимерность"
+
+#: tools/templates/tools/base_converter.html:21
+#: tools/templates/tools/base_converter.html:31
+msgid "十六进制"
+msgstr "Шестое предложение"
+
+#: tools/templates/tools/base_converter.html:26
+msgid "目标进制"
+msgstr "Целевая атака"
+
+#: tools/templates/tools/base_converter.html:35
+msgid "转换"
+msgstr "Преобразование"
+
+#: tools/templates/tools/base_converter.html:38
+msgid "结果"
+msgstr "Результаты"
+
+#: tools/templates/tools/base_converter.html:39
+msgid "输入格式错误"
+msgstr "Ошибка формата ввода"
+
+#: tools/templates/tools/index.html:11 tools/templates/tools/timer.html:3
+#: tools/templates/tools/timer.html:7
+msgid "计时器"
+msgstr "Счётчик"
+
+#: tools/templates/tools/index.html:12
+msgid "设定时间，倒计时提醒"
+msgstr "Установка времени, обратный счёт напоминания"
+
+#: tools/templates/tools/index.html:15 tools/templates/tools/stopwatch.html:3
+#: tools/templates/tools/stopwatch.html:7
+msgid "秒表"
+msgstr "Второй этап"
+
+#: tools/templates/tools/index.html:16
+msgid "开始、暂停、计圈、重置"
+msgstr "Начать, приостановить, зачислить, переложить"
+
+#: tools/templates/tools/index.html:20
+msgid "二 / 八 / 十 / 十六进制互转"
+msgstr "Второй / 8 / 10 / 16 Взаимообменный механизм"
+
+#: tools/templates/tools/stopwatch.html:12 tools/templates/tools/timer.html:21
+msgid "开始"
+msgstr "Начало"
+
+#: tools/templates/tools/stopwatch.html:13
+msgid "停止"
+msgstr "Прекратите."
+
+#: tools/templates/tools/stopwatch.html:14
+msgid "计圈"
+msgstr "Счетный круг"
+
+#: tools/templates/tools/stopwatch.html:15 tools/templates/tools/timer.html:23
+msgid "重置"
+msgstr "Перестановка"
+
+#: tools/templates/tools/stopwatch.html:19
+msgid "计圈 #"
+msgstr "Счетчик #"
+
+#: tools/templates/tools/timer.html:11
+msgid "分"
+msgstr "Смотрите."
+
+#: tools/templates/tools/timer.html:13
+msgid "秒"
+msgstr "В секунду."
+
+#: tools/templates/tools/timer.html:18
+msgid "时间到！"
+msgstr "Пришло время!"
+
+#: tools/templates/tools/timer.html:22
+msgid "暂停"
+msgstr "Приостановка"

@@ -1,0 +1,141 @@
+{% extends 'core/base.html' %}{% load i18n %}{% load blog_extras %}
+
+{% block title %}{{ post.title }} | Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-3xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <a href="{% url 'blog:blog_home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "博客" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <a href="{% url 'blog:author_detail' username=post.author.username %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{{ post.author.username }}{% trans "的博客" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200 truncate max-w-[12rem] inline-block align-bottom">{{ post.title }}</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-8">
+    <article class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6 sm:p-8 shadow-sm transition-colors">
+        <h1 class="text-2xl sm:text-3xl font-bold mb-3">{{ post.title }}</h1>
+        <div class="text-sm text-slate-500 dark:text-slate-400 mb-3 pb-4 border-b border-slate-200 dark:border-slate-700">
+            <a href="{% url 'blog:author_detail' username=post.author.username %}" class="hover:underline">{{ post.author.username }}</a>
+            · {{ post.created_at|date:"Y-m-d H:i" }}
+            {% if post.updated_at != post.created_at %}
+                <span class="ml-2">({% trans "更新于" %} {{ post.updated_at|date:"Y-m-d H:i" }})</span>
+            {% endif %}
+        </div>
+        {% with post.tags|split:',' as tag_list %}
+            {% if tag_list %}
+                <div class="flex flex-wrap gap-2 mb-6">
+                    {% for t in tag_list %}
+                        <a href="{% url 'blog:blog_home' %}?tag={{ t|urlencode }}" class="text-xs px-2 py-1 rounded-full bg-sky-100 text-sky-700 hover:bg-sky-200 dark:bg-sky-900 dark:text-sky-300 dark:hover:bg-sky-800 transition">#{{ t }}</a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <div class="max-w-none rich-content">{{ post.content|safe }}</div>
+    </article>
+
+    {% if user == post.author or user.is_superuser %}
+        <div class="flex gap-3 mt-6">
+            <a href="{% url 'blog:post_edit' username=post.author.username pk=post.pk %}" class="px-4 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700 transition">{% trans "编辑" %}</a>
+            <a href="{% url 'blog:post_delete' username=post.author.username pk=post.pk %}" class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition">{% trans "删除" %}</a>
+        </div>
+    {% endif %}
+
+    <section class="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
+        <h2 class="text-xl font-bold mb-4">{% trans "评论" %}</h2>
+        <div class="space-y-4 mb-6">
+            {% for comment in comments %}
+                <div class="comment-box bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm transition-colors">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="comment-author font-medium text-slate-800 dark:text-slate-200">
+                            {% if comment.author %}
+                                <a href="{% url 'blog:author_detail' username=comment.author.username %}" class="hover:underline">{{ comment.author.username }}</a>
+                            {% else %}
+                                {% trans "匿名" %}
+                            {% endif %}
+                        </span>
+                        <span class="text-xs text-slate-500 dark:text-slate-400">{{ comment.created_at|date:"Y-m-d H:i" }}</span>
+                    </div>
+                    <p class="text-slate-700 dark:text-slate-300 whitespace-pre-wrap">{{ comment.content }}</p>
+                    <div class="flex items-center gap-3 mt-2">
+                        <button type="button" class="reply-btn text-xs text-sky-600 dark:text-sky-400 hover:underline" data-parent="{{ comment.pk }}">{% trans "回复" %}</button>
+                        {% if user == post.author or user == comment.author %}
+                            <form method="post" action="{% url 'blog:comment_delete' username=post.author.username pk=post.pk comment_pk=comment.pk %}" class="inline">
+                                {% csrf_token %}
+                                <button type="submit" class="text-xs text-red-600 dark:text-red-400 hover:underline">{% trans "撤回" %}</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                    {% for reply in comment.replies.all %}
+                        <div class="ml-6 sm:ml-10 mt-3 pl-3 border-l-2 border-slate-200 dark:border-slate-600">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="font-medium text-slate-800 dark:text-slate-200 text-sm">
+                                    {% if reply.author %}
+                                        <a href="{% url 'blog:author_detail' username=reply.author.username %}" class="hover:underline">{{ reply.author.username }}</a>
+                                    {% else %}
+                                        {% trans "匿名" %}
+                                    {% endif %}
+                                </span>
+                                <span class="text-xs text-slate-500 dark:text-slate-400">{{ reply.created_at|date:"Y-m-d H:i" }}</span>
+                            </div>
+                            <p class="text-slate-700 dark:text-slate-300 text-sm whitespace-pre-wrap">{{ reply.content }}</p>
+                            {% if user == post.author or user == reply.author %}
+                                <form method="post" action="{% url 'blog:comment_delete' username=post.author.username pk=post.pk comment_pk=reply.pk %}" class="mt-1">
+                                    {% csrf_token %}
+                                    <button type="submit" class="text-xs text-red-600 dark:text-red-400 hover:underline">{% trans "撤回" %}</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% empty %}
+                <p class="text-slate-500 dark:text-slate-400">{% trans "暂无评论" %}</p>
+            {% endfor %}
+        </div>
+
+        <form id="comment-form" method="post" action="{% url 'blog:comment_create' username=post.author.username pk=post.pk %}" class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm transition-colors">
+            {% csrf_token %}
+            <input type="hidden" name="parent" id="id_parent" value="">
+            <div id="reply-to" class="hidden mb-3 text-sm text-slate-600 dark:text-slate-400 flex items-center justify-between">
+                <span>{% trans "回复中" %}</span>
+                <button type="button" id="cancel-reply" class="text-xs text-sky-600 dark:text-sky-400 hover:underline">{% trans "取消回复" %}</button>
+            </div>
+            <div class="mb-3">
+                {{ form.content }}
+                {% if form.content.errors %}
+                    <p class="text-rose-500 text-sm mt-1">{{ form.content.errors.0 }}</p>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{% trans "验证码" %}</label>
+                <div class="captcha-widget">
+                    {{ form.captcha }}
+                </div>
+                {% if form.captcha.errors %}
+                    <p class="text-rose-500 text-sm mt-1">{{ form.captcha.errors.0 }}</p>
+                {% endif %}
+            </div>
+            <button type="submit" class="px-4 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700 transition">{% trans "发表评论" %}</button>
+        </form>
+
+        <script>
+            document.querySelectorAll('.reply-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.getElementById('id_parent').value = btn.dataset.parent;
+                    document.getElementById('reply-to').classList.remove('hidden');
+                    document.getElementById('id_content').focus();
+                });
+            });
+            document.getElementById('cancel-reply').addEventListener('click', () => {
+                document.getElementById('id_parent').value = '';
+                document.getElementById('reply-to').classList.add('hidden');
+            });
+        </script>
+    </section>
+</div>
+{% endblock %}
