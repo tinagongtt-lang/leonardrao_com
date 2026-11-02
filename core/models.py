@@ -13,6 +13,19 @@ class VisitCounter(models.Model):
         return f'{self.name}: {self.count}'
 
 
+class Visitor(models.Model):
+    key = models.CharField(max_length=64, unique=True)
+    first_seen = models.DateTimeField(auto_now_add=True)
+    last_seen = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = '访客'
+        verbose_name_plural = '访客'
+
+    def __str__(self):
+        return self.key
+
+
 class FriendlyLink(models.Model):
     name = models.CharField(max_length=64, verbose_name='名称')
     url = models.URLField(verbose_name='链接')

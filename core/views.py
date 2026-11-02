@@ -5,19 +5,17 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.utils.translation import gettext_lazy as _
 
-from .models import FriendlyLink, VisitCounter
+from .models import FriendlyLink, Visitor
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 def home(request):
-    counter, _ = VisitCounter.objects.get_or_create(name='total', defaults={'count': 0})
-    return render(request, 'core/home.html', {'visit_count': counter.count})
+    return render(request, 'core/home.html', {'visit_count': Visitor.objects.count()})
 
 
 def visit_count_api(request):
-    counter, _ = VisitCounter.objects.get_or_create(name='total', defaults={'count': 0})
-    return JsonResponse({'count': counter.count})
+    return JsonResponse({'count': Visitor.objects.count()})
 
 
 def service_worker(request):
