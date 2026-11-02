@@ -41,6 +41,14 @@
             <h2 class="text-2xl font-bold mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">{% trans "五子棋" %}</h2>
             <p class="text-slate-600 dark:text-slate-400">{% trans "五连即胜，人机或分享链接对弈" %}</p>
         </a>
+        <a href="{% url 'games:sudoku' %}" class="group block rounded-2xl bg-white border border-slate-200 p-8 hover:border-sky-500 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 transition">
+            <h2 class="text-2xl font-bold mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">{% trans "数独" %}</h2>
+            <p class="text-slate-600 dark:text-slate-400">{% trans "三档难度的经典填数游戏" %}</p>
+        </a>
+        <a href="{% url 'games:minesweeper' %}" class="group block rounded-2xl bg-white border border-slate-200 p-8 hover:border-sky-500 hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 transition">
+            <h2 class="text-2xl font-bold mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">{% trans "扫雷" %}</h2>
+            <p class="text-slate-600 dark:text-slate-400">{% trans "初级/中级/高级三种规格" %}</p>
+        </a>
     </div>
 </section>
 {% endblock %}

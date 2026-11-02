@@ -22,6 +22,14 @@ def maze3d(request):
     return render(request, 'games/maze3d.html')
 
 
+def sudoku(request):
+    return render(request, 'games/sudoku.html')
+
+
+def minesweeper(request):
+    return render(request, 'games/minesweeper.html')
+
+
 def _ensure_session(request):
     if not request.session.session_key:
         request.session.save()
