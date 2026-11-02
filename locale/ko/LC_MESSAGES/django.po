@@ -601,8 +601,8 @@ msgid "友情链接"
 msgstr ""
 
 #: core/templates/core/base.html:173
-msgid "本站总访问量："
-msgstr "이 사이트의 전체 방문자:"
+msgid "本站访问人数："
+msgstr "사이트 방문자 수:"
 
 #: core/templates/core/base.html:178
 msgid "返回顶部"
