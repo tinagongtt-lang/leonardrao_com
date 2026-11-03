@@ -37,6 +37,7 @@ urlpatterns = i18n_patterns(
     path('guestbook/', include('guestbook.urls')),
     path('blog/', include('blog.urls')),
     path('chat/', include('chat.urls')),
+    path('cog/', include('cog.urls')),
     prefix_default_language=False,
 ) + [
     path('i18n/', include('django.conf.urls.i18n')),

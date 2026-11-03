@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'tools',
     'guestbook',
     'blog',
+    'cog',
 ]
 
 MIDDLEWARE = [

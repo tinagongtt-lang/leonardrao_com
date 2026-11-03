@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}{% load i18n %}
+
+{% block title %}COG - Leonard Rao{% endblock %}
+
+{% block breadcrumbs %}
+<div class="max-w-5xl mx-auto px-4 pt-4">
+    <nav aria-label="breadcrumb" class="text-sm text-slate-500 dark:text-slate-400">
+        <a href="{% url 'core:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "首页" %}</a>
+        <span class="mx-2 text-slate-300 dark:text-slate-600">/</span>
+        <span class="text-slate-700 dark:text-slate-200">COG</span>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="max-w-2xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-2 text-center">COG</h1>
+    <p class="text-slate-600 dark:text-slate-400 mb-6 text-center">{% trans "个人小助手 · Mock 模式（不联网、不调用模型 API）" %}</p>
+
+    <div class="bg-white border border-slate-200 rounded-2xl dark:bg-slate-800 dark:border-slate-700">
+        <div id="chat-log" class="h-96 overflow-y-auto p-5 space-y-4">
+            {% for m in messages %}
+            {% if m.role == 'user' %}
+            <div class="flex justify-end">
+                <div class="max-w-[75%] rounded-2xl rounded-br-md bg-sky-600 text-white px-4 py-2.5 shadow whitespace-pre-wrap break-words">{{ m.content }}</div>
+            </div>
+            {% elif m.role == 'tool' %}
+            <div class="flex">
+                <div class="max-w-[90%] rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 px-3 py-2 text-xs text-slate-500 dark:text-slate-400 font-mono whitespace-pre-wrap break-words">🔧 {{ m.name }}：{{ m.content }}</div>
+            </div>
+            {% else %}
+            <div class="flex">
+                <div class="max-w-[75%] rounded-2xl rounded-tl-md bg-slate-100 text-slate-800 px-4 py-2.5 shadow dark:bg-slate-700 dark:text-slate-100 whitespace-pre-wrap break-words">{% if m.name == 'ask' %}<span class="block text-xs text-sky-600 dark:text-sky-400 mb-1">{% trans "追问" %}</span>{% endif %}{{ m.content }}</div>
+            </div>
+            {% endif %}
+            {% empty %}
+            <p class="text-center text-slate-500 dark:text-slate-400 py-10">{% trans "对话次数不限。试试：演示工具 / 帮我安排 / 列出会话 / 搜索记忆：关键词" %}</p>
+            {% endfor %}
+        </div>
+
+        {% if trace %}
+        <div class="px-5 pb-2 text-xs text-slate-400 dark:text-slate-500 font-mono space-y-0.5 border-t border-slate-100 dark:border-slate-700 pt-3">
+            {% for e in trace %}<div>[流程] {{ e }}</div>{% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="post" class="flex gap-2 p-4 border-t border-slate-200 dark:border-slate-700">
+            {% csrf_token %}
+            <input name="text" required autocomplete="off" placeholder="{% trans '输入消息…' %}"
+                class="flex-1 px-4 py-2 rounded-full bg-slate-50 border border-slate-300 text-slate-900 focus:border-sky-500 outline-none dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+            <button type="submit" class="px-5 py-2 rounded-full bg-sky-600 text-white font-semibold hover:bg-sky-500 active:scale-95 transition">{% trans "发送" %}</button>
+            <button type="submit" name="text" value="重置" class="px-4 py-2 rounded-full bg-slate-200 text-slate-700 hover:bg-slate-300 dark:bg-slate-600 dark:text-slate-200 transition" title="{% trans '开始新对话，旧记录保留' %}">{% trans "重置" %}</button>
+        </form>
+    </div>
+
+    <p class="mt-4 text-xs text-slate-400 dark:text-slate-500 text-center">{% trans "会话编号" %}：{{ session_id }} · {% trans "记忆存于本站数据库（明文）" %}</p>
+</section>
+<script>
+const log = document.getElementById('chat-log');
+log.scrollTop = log.scrollHeight;
+</script>
+{% endblock %}

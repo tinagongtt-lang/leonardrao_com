@@ -67,6 +67,7 @@
                     <a href="{% url 'guestbook:guestbook' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "留言板" %}</a>
                     <a href="{% url 'blog:blog_home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "博客" %}</a>
                     {% if user.is_authenticated %}<a href="{% url 'chat:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "聊天室" %}</a>{% endif %}
+                    {% if user.is_superuser %}<a href="{% url 'cog:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">COG</a>{% endif %}
                     <a href="{% url 'blog:about_me' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "关于我" %}</a>
 
                     <form action="{% url 'set_language' %}" method="post" id="lang-form" class="inline-block" data-current-lang="{{ request.LANGUAGE_CODE }}">
@@ -109,6 +110,7 @@
                     <a href="{% url 'guestbook:guestbook' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "留言板" %}</a>
                     <a href="{% url 'blog:blog_home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "博客" %}</a>
                     {% if user.is_authenticated %}<a href="{% url 'chat:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "聊天室" %}</a>{% endif %}
+                    {% if user.is_superuser %}<a href="{% url 'cog:home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">COG</a>{% endif %}
                     <a href="{% url 'blog:about_me' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% trans "关于我" %}</a>
 
                     <form action="{% url 'set_language' %}" method="post" id="lang-form-mobile" class="inline-block" data-current-lang="{{ request.LANGUAGE_CODE }}">
