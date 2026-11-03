@@ -24,6 +24,10 @@
             <div class="flex justify-end">
                 <div class="max-w-[75%] rounded-2xl rounded-br-md bg-sky-600 text-white px-4 py-2.5 shadow whitespace-pre-wrap break-words">{{ m.content }}</div>
             </div>
+            {% elif m.role == 'toolcall' %}
+            <div class="flex">
+                <div class="text-xs text-slate-400 dark:text-slate-500 px-2">🔧 {% trans "调用工具" %}：{{ m.content }}</div>
+            </div>
             {% elif m.role == 'tool' %}
             <div class="flex">
                 <div class="max-w-[90%] rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 px-3 py-2 text-xs text-slate-500 dark:text-slate-400 font-mono whitespace-pre-wrap break-words">🔧 {{ m.name }}：{{ m.content }}</div>
